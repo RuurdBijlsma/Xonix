@@ -1,30 +1,33 @@
 package xonix;
 
+import java.awt.Color;
+import java.awt.geom.Point2D;
+
 class FieldSquare {
 
-    private java.awt.geom.Point2D.Float loc;
-    private java.awt.Color color;
+    private Point2D.Float loc;
+    private Color color;
     private float size;
 
-    FieldSquare(final java.awt.geom.Point2D.Float loc, final java.awt.Color color, float size) {
+    FieldSquare(final Point2D.Float loc, final Color color, float size) {
         setLocation(loc);
         setColor(color);
         setSize(size);
     }
 
-    java.awt.geom.Point2D.Float getLocation() {
+    Point2D.Float getLocation() {
         return loc;
     }
 
-    private void setLocation(java.awt.geom.Point2D.Float loc) {
+    private void setLocation(Point2D.Float loc) {
         this.loc = loc;
     }
 
-    java.awt.Color getColor() {
+    Color getColor() {
         return color;
     }
 
-    void setColor(final java.awt.Color color) {
+    void setColor(final Color color) {
         this.color = color;
     }
 

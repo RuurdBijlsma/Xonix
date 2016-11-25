@@ -1,14 +1,17 @@
 package xonix;
 
+import java.awt.Color;
+import java.awt.geom.Point2D;
+
 class MonsterBall {
 
-    private java.awt.geom.Point2D.Float loc;
-    private java.awt.Color color;
+    private Point2D.Float loc;
+    private Color color;
     private int heading;
     private float speed;
     private float radius;
 
-    MonsterBall(final java.awt.geom.Point2D.Float loc, final java.awt.Color color, final int heading, final float speed, final float radius) {
+    MonsterBall(final Point2D.Float loc, final Color color, final int heading, final float speed, final float radius) {
         setLocation(loc);
         setColor(color);
         setHeading(heading);
@@ -16,19 +19,19 @@ class MonsterBall {
         this.setRadius(radius);
     }
 
-    java.awt.geom.Point2D.Float getLocation() {
+    Point2D.Float getLocation() {
         return loc;
     }
 
-    private void setLocation(java.awt.geom.Point2D.Float loc) {
+    private void setLocation(Point2D.Float loc) {
         this.loc = loc;
     }
 
-    java.awt.Color getColor() {
+    Color getColor() {
         return color;
     }
 
-    private void setColor(final java.awt.Color color) {
+    private void setColor(final Color color) {
         this.color = color;
     }
 
@@ -56,7 +59,7 @@ class MonsterBall {
         this.radius = radius;
     }
 
-    private java.awt.geom.Point2D.Float nextLocation(float delta) {
+    private Point2D.Float nextLocation(float delta) {
         double radians = Math.toRadians(getHeading());
         float newx = getLocation().x + delta * getSpeed() * (float) Math.cos(radians);
         if (newx < 0)
@@ -68,12 +71,12 @@ class MonsterBall {
             newy = 0;
         else if (newy > GameWorld.SQUARE_LENGTH * GameWorld.SQUARE_UNITS - (GameWorld.SQUARE_UNITS - 1))
             newy = GameWorld.SQUARE_LENGTH * GameWorld.SQUARE_UNITS - (GameWorld.SQUARE_UNITS - 1);
-        return new java.awt.geom.Point2D.Float(newx, newy);
+        return new Point2D.Float(newx, newy);
     }
 
     boolean changeLocation(FieldSquares fss, float delta) {
-        java.awt.geom.Point2D.Float prev = getLocation();
-        java.awt.geom.Point2D.Float next = nextLocation(delta);
+        Point2D.Float prev = getLocation();
+        Point2D.Float next = nextLocation(delta);
         FieldSquare fsprev = fss.elementAt((int) (prev.x / GameWorld.SQUARE_UNITS + 0.5), (int) (prev.y / GameWorld.SQUARE_UNITS + 0.5));
         FieldSquare fsnext = fss.elementAt((int) (next.x / GameWorld.SQUARE_UNITS + 0.5), (int) (next.y / GameWorld.SQUARE_UNITS + 0.5));
 

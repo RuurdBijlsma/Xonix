@@ -14,7 +14,7 @@ class GameView extends JFrame {
 
         ScoreView() {
             this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
-            this.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 0, 10, 0));
+            this.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
             level = new JLabel("");
             this.add(level);
             this.add(Box.createHorizontalGlue());
@@ -51,7 +51,7 @@ class GameView extends JFrame {
         }
 
         @Override
-        public void paint(java.awt.Graphics g) {
+        public void paint(Graphics g) {
             super.paint(g);
 
             for (int i = 0; i < GameWorld.SQUARE_LENGTH; i++)
@@ -64,7 +64,7 @@ class GameView extends JFrame {
             if (gw.state.isGameOver()) {
                 Font font = new Font("Helvetica", Font.BOLD, 18);
                 FontMetrics metrics = g.getFontMetrics(font);
-                g.setColor(java.awt.Color.RED);
+                g.setColor(Color.RED);
                 g.setFont(font);
                 g.drawString("GAME OVER", (GameWorld.SQUARE_LENGTH * GameWorld.SQUARE_UNITS - metrics.stringWidth("GAME OVER")) / 2, (GameWorld.SQUARE_LENGTH * GameWorld.SQUARE_UNITS - metrics.getHeight()) / 2);
                 return;
@@ -105,7 +105,7 @@ class GameView extends JFrame {
         this.pack();
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        this.setSize(new java.awt.Dimension(630, 610));
+        this.setSize(new Dimension(630, 610));
         this.setResizable(false);
         this.setVisible(true);
     }

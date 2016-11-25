@@ -112,33 +112,33 @@ public class GameWorld {
 
     private void execute(int keycode) {
         switch (keycode) {
-            case java.awt.event.KeyEvent.VK_LEFT:
+            case KeyEvent.VK_LEFT:
                 car.setHeading(180);
                 break;
-            case java.awt.event.KeyEvent.VK_UP:
+            case KeyEvent.VK_UP:
                 car.setHeading(90);
                 break;
-            case java.awt.event.KeyEvent.VK_RIGHT:
+            case KeyEvent.VK_RIGHT:
                 car.setHeading(0);
                 break;
-            case java.awt.event.KeyEvent.VK_DOWN:
+            case KeyEvent.VK_DOWN:
                 car.setHeading(270);
                 break;
-            case java.awt.event.KeyEvent.VK_SPACE:
+            case KeyEvent.VK_SPACE:
                 if (state.isGameOver())
                     reset();
                 break;
-            case java.awt.event.KeyEvent.VK_I:
+            case KeyEvent.VK_I:
                 car.setSpeed(car.getSpeed() + 5);
                 break;
-            case java.awt.event.KeyEvent.VK_K:
-                tts.add(new TimeTicket(new java.awt.geom.Point2D.Float(random.nextInt(SQUARE_LENGTH * SQUARE_UNITS - 30) + 15, random.nextInt(SQUARE_LENGTH * SQUARE_UNITS - 30) + 15), ticketColor, TIME_START, 7, 7));
+            case KeyEvent.VK_K:
+                tts.add(new TimeTicket(new Point2D.Float(random.nextInt(SQUARE_LENGTH * SQUARE_UNITS - 30) + 15, random.nextInt(SQUARE_LENGTH * SQUARE_UNITS - 30) + 15), ticketColor, TIME_START, 7, 7));
                 break;
-            case java.awt.event.KeyEvent.VK_L:
+            case KeyEvent.VK_L:
                 car.setSpeed(car.getSpeed() - 5);
                 break;
-            case java.awt.event.KeyEvent.VK_M:
-                mbs.add(new MonsterBall(new java.awt.geom.Point2D.Float(random.nextInt(SQUARE_LENGTH * SQUARE_UNITS - 30) + 15, random.nextInt(SQUARE_LENGTH * SQUARE_UNITS - 30) + 15), monsterColor, random.nextInt(360), random.nextFloat() * 100 + 10, 6));
+            case KeyEvent.VK_M:
+                mbs.add(new MonsterBall(new Point2D.Float(random.nextInt(SQUARE_LENGTH * SQUARE_UNITS - 30) + 15, random.nextInt(SQUARE_LENGTH * SQUARE_UNITS - 30) + 15), monsterColor, random.nextInt(360), random.nextFloat() * 100 + 10, 6));
                 break;
         }
     }

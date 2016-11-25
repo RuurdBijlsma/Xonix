@@ -1,14 +1,20 @@
 package xonix;
 
+import java.awt.Color;
+import java.awt.Point;
+import java.awt.geom.Point2D;
+import java.util.ArrayList;
+import java.util.Stack;
+
 class FieldSquares {
 
     private final FieldSquare[][] fsss;
-    private final java.awt.Color[][] colors;
+    private final Color[][] colors;
 
     FieldSquares() {
         fsss = new FieldSquare[GameWorld.SQUARE_LENGTH][GameWorld.SQUARE_LENGTH];
         setFields(GameWorld.PLAYER_COLOR, GameWorld.SQUARE_COLOR);
-        colors = new java.awt.Color[GameWorld.SQUARE_LENGTH][GameWorld.SQUARE_LENGTH];
+        colors = new Color[GameWorld.SQUARE_LENGTH][GameWorld.SQUARE_LENGTH];
     }
 
     FieldSquare elementAt(int i, int j) {
@@ -19,13 +25,13 @@ class FieldSquares {
         setFields(GameWorld.PLAYER_COLOR, GameWorld.SQUARE_COLOR);
     }
 
-    private void setFields(java.awt.Color edge, java.awt.Color inner) {
+    private void setFields(Color edge, Color inner) {
         for (int y = 0; y < GameWorld.SQUARE_LENGTH; y++)
             for (int x = 0; x < GameWorld.SQUARE_LENGTH; x++)
                 if (x == 0 || y == 0 || x == GameWorld.SQUARE_LENGTH - 1 || y == GameWorld.SQUARE_LENGTH - 1)
-                    fsss[x][y] = new FieldSquare(new java.awt.geom.Point2D.Float(x * GameWorld.SQUARE_UNITS, y * GameWorld.SQUARE_UNITS), edge, GameWorld.SQUARE_UNITS);
+                    fsss[x][y] = new FieldSquare(new Point2D.Float(x * GameWorld.SQUARE_UNITS, y * GameWorld.SQUARE_UNITS), edge, GameWorld.SQUARE_UNITS);
                 else
-                    fsss[x][y] = new FieldSquare(new java.awt.geom.Point2D.Float(x * GameWorld.SQUARE_UNITS, y * GameWorld.SQUARE_UNITS), inner, GameWorld.SQUARE_UNITS);
+                    fsss[x][y] = new FieldSquare(new Point2D.Float(x * GameWorld.SQUARE_UNITS, y * GameWorld.SQUARE_UNITS), inner, GameWorld.SQUARE_UNITS);
     }
 
     int fillSquares() {
@@ -60,7 +66,7 @@ class FieldSquares {
                 this.z = z;
             }
         }
-        java.util.ArrayList<Point3D> areas = new java.util.ArrayList<>();
+        ArrayList<Point3D> areas = new ArrayList<>();
         for (int x = 1; x < GameWorld.SQUARE_LENGTH - 1; x++)
             for (int y = 1; y < GameWorld.SQUARE_LENGTH - 1; y++)
                 if (colors[x][y] == GameWorld.SQUARE_COLOR)
@@ -86,29 +92,29 @@ class FieldSquares {
     private int areaSize(int x, int y) {
         int size = 0;
 
-        java.util.Stack<java.awt.Point> ps = new java.util.Stack<>();
-        ps.push(new java.awt.Point(x, y));
+        Stack<Point> ps = new Stack<>();
+        ps.push(new Point(x, y));
 
         while (ps.size() != 0) {
-            java.awt.Point cp = ps.pop();
+            Point cp = ps.pop();
 
             colors[cp.x][cp.y] = GameWorld.PLAYER_COLOR;
 
             if (colors[cp.x][cp.y + 1] == GameWorld.SQUARE_COLOR) {
                 ps.push(cp);
-                ps.push(new java.awt.Point(cp.x, cp.y + 1));
+                ps.push(new Point(cp.x, cp.y + 1));
                 size++;
             } else if (colors[cp.x + 1][cp.y] == GameWorld.SQUARE_COLOR) {
                 ps.push(cp);
-                ps.push(new java.awt.Point(cp.x + 1, cp.y));
+                ps.push(new Point(cp.x + 1, cp.y));
                 size++;
             } else if (colors[cp.x - 1][cp.y] == GameWorld.SQUARE_COLOR) {
                 if (colors[cp.x][cp.y - 1] == GameWorld.SQUARE_COLOR)
                     ps.push(cp);
-                ps.push(new java.awt.Point(cp.x - 1, cp.y));
+                ps.push(new Point(cp.x - 1, cp.y));
                 size++;
             } else if (colors[cp.x][cp.y - 1] == GameWorld.SQUARE_COLOR) {
-                ps.push(new java.awt.Point(cp.x, cp.y - 1));
+                ps.push(new Point(cp.x, cp.y - 1));
                 size++;
             }
         }
