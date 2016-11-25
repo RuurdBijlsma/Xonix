@@ -1,9 +1,9 @@
 package xonix;
 
-import java.awt.Color;
+import java.awt.*;
 import java.awt.geom.Point2D;
 
-class Car {
+class Car extends Movable implements IColorable, ISteerable{
     private Point2D.Float loc;
     private Color color;
     private int heading;
@@ -29,7 +29,8 @@ class Car {
         setHeight(GameWorld.SQUARE_UNITS);
     }
 
-    Point2D.Float getLocation() {
+    @Override
+    public Point2D.Float getLocation() {
         return loc;
     }
 
@@ -37,63 +38,54 @@ class Car {
         this.loc = loc;
     }
 
-    Color getColor() {
+    public Color getColor() {
         return color;
     }
 
-    private void setColor(final Color color) {
+    public void setColor(final Color color) {
         this.color = color;
     }
 
-    private int getHeading() {
+    public int getHeading() {
         return heading;
     }
 
-    final void setHeading(final int heading) {
+    public void setHeading(final int heading) {
         this.heading = heading;
     }
 
-    float getSpeed() {
+    public float getSpeed() {
         return speed;
     }
 
-    final void setSpeed(final float speed) {
+    public void setSpeed(final float speed) {
         this.speed = speed;
     }
 
-    int getWidth() {
+    public int getWidth() {
         return width;
     }
 
-    private void setWidth(final int width) {
+    public void setWidth(final int width) {
         this.width = width;
     }
 
-    int getHeight() {
+    public int getHeight() {
         return height;
     }
 
-    private void setHeight(final int height) {
+    @Override
+    public void setLocation(double x, double y) {
+
+    }
+
+    public void setHeight(final int height) {
         this.height = height;
     }
 
-    private Point2D.Float nextLocation(float delta) {
-        double radians = Math.toRadians(getHeading());
-        float newx = getLocation().x + delta * getSpeed() * (float) Math.cos(radians);
-        if (newx < 0)
-            newx = 0;
-        else if (newx > GameWorld.SQUARE_LENGTH * GameWorld.SQUARE_UNITS - (GameWorld.SQUARE_UNITS - 1))
-            newx = GameWorld.SQUARE_LENGTH * GameWorld.SQUARE_UNITS - (GameWorld.SQUARE_UNITS - 1);
-        float newy = getLocation().y - delta * getSpeed() * (float) Math.sin(radians);
-        if (newy < 0)
-            newy = 0;
-        else if (newy > GameWorld.SQUARE_LENGTH * GameWorld.SQUARE_UNITS - (GameWorld.SQUARE_UNITS - 1))
-            newy = GameWorld.SQUARE_LENGTH * GameWorld.SQUARE_UNITS - (GameWorld.SQUARE_UNITS - 1);
-        return new Point2D.Float(newx, newy);
-    }
-
-    void changeLocation(FieldSquares fss, State state, float delta) {
-        Point2D.Float prev = getLocation();
+    @Override
+    boolean changeLocation(FieldSquares fss, float delta, State state) {
+        Point2D.Float prev = (Point2D.Float) getLocation();
         Point2D.Float next = nextLocation(delta);
         FieldSquare fsprev = fss.elementAt((int) (prev.x / GameWorld.SQUARE_UNITS + 0.5), (int) (prev.y / GameWorld.SQUARE_UNITS + 0.5));
         FieldSquare fsnext = fss.elementAt((int) (next.x / GameWorld.SQUARE_UNITS + 0.5), (int) (next.y / GameWorld.SQUARE_UNITS + 0.5));
@@ -102,6 +94,7 @@ class Car {
         else if (fsnext.getColor() == GameWorld.PLAYER_COLOR && fsprev.getColor() == GameWorld.LINE_COLOR)
             state.addcscore(fss.fillSquares());
         getLocation().setLocation(next);
+        return false;
     }
 
     @Override

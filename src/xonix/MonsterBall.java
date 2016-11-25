@@ -1,9 +1,9 @@
 package xonix;
 
-import java.awt.Color;
+import java.awt.*;
 import java.awt.geom.Point2D;
 
-class MonsterBall {
+class MonsterBall extends Movable {
 
     private Point2D.Float loc;
     private Color color;
@@ -19,7 +19,8 @@ class MonsterBall {
         this.setRadius(radius);
     }
 
-    Point2D.Float getLocation() {
+    @Override
+    public Point2D.Float getLocation() {
         return loc;
     }
 
@@ -35,20 +36,46 @@ class MonsterBall {
         this.color = color;
     }
 
-    private int getHeading() {
+
+    public int getHeading() {
         return heading;
     }
 
-    private void setHeading(final int heading) {
+    public void setHeading(final int heading) {
         this.heading = heading;
     }
 
-    private float getSpeed() {
+    public float getSpeed() {
         return speed;
     }
 
-    private void setSpeed(final float speed) {
+    @Override
+    public int getWidth() {
+        return 0;
+    }
+
+    @Override
+    public int getHeight() {
+        return 0;
+    }
+
+    @Override
+    public void setLocation(double x, double y) {
+
+    }
+
+    public void setSpeed(final float speed) {
         this.speed = speed;
+    }
+
+    @Override
+    public void setWidth(int width) {
+
+    }
+
+    @Override
+    public void setHeight(int height) {
+
     }
 
     float getRadius() {
@@ -59,22 +86,8 @@ class MonsterBall {
         this.radius = radius;
     }
 
-    private Point2D.Float nextLocation(float delta) {
-        double radians = Math.toRadians(getHeading());
-        float newx = getLocation().x + delta * getSpeed() * (float) Math.cos(radians);
-        if (newx < 0)
-            newx = 0;
-        else if (newx > GameWorld.SQUARE_LENGTH * GameWorld.SQUARE_UNITS - (GameWorld.SQUARE_UNITS - 1))
-            newx = GameWorld.SQUARE_LENGTH * GameWorld.SQUARE_UNITS - (GameWorld.SQUARE_UNITS - 1);
-        float newy = getLocation().y - delta * getSpeed() * (float) Math.sin(radians);
-        if (newy < 0)
-            newy = 0;
-        else if (newy > GameWorld.SQUARE_LENGTH * GameWorld.SQUARE_UNITS - (GameWorld.SQUARE_UNITS - 1))
-            newy = GameWorld.SQUARE_LENGTH * GameWorld.SQUARE_UNITS - (GameWorld.SQUARE_UNITS - 1);
-        return new Point2D.Float(newx, newy);
-    }
-
-    boolean changeLocation(FieldSquares fss, float delta) {
+    @Override
+    boolean changeLocation(FieldSquares fss, float delta, State state){
         Point2D.Float prev = getLocation();
         Point2D.Float next = nextLocation(delta);
         FieldSquare fsprev = fss.elementAt((int) (prev.x / GameWorld.SQUARE_UNITS + 0.5), (int) (prev.y / GameWorld.SQUARE_UNITS + 0.5));

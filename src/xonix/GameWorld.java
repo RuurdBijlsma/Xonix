@@ -26,7 +26,7 @@ public class GameWorld {
 //    static final int LIVES_START = 3;
 //    static final int CSCORE_START = 0;
 //    static final int RSCORE_START = (40 + LEVEL_START * 10) * 100;
-    private final int TIME_START = 6 - LEVEL_START;
+    private final int TIME_START = 55 - LEVEL_START;
 
     private final GameView gv;
     public final FieldSquares fss;
@@ -85,12 +85,12 @@ public class GameWorld {
         if (!state.isGameOver()) {
             state.addClock(-delta);
             for (MonsterBall mb : mbs)
-                if (mb.changeLocation(fss, delta)) {
+                if (mb.changeLocation(fss, delta, null)) {
                     state.decLives();
                     mbs.remove(mb);
                     break;
                 }
-            car.changeLocation(fss, state, delta);
+            car.changeLocation(fss, delta, state);
             for (TimeTicket tt : tts)
                 if (tt.contains(car.getLocation())) {
                     state.setClock(state.getClock() + tt.getSeconds());
