@@ -1,158 +1,144 @@
 package xonix;
 
-public class GameWorld
-{
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.geom.Point2D;
+import java.util.ArrayList;
+import java.util.Random;
+
+
+public class GameWorld {
 
     static final int SQUARE_LENGTH = 102;
     static final int SQUARE_UNITS = 5;
     static final int GAME_TICK_DELAY = 40;
-    static final java.awt.Color NO_COLOR = java.awt.Color.white;
-    static final java.awt.Color CAR_COLOR = java.awt.Color.red;
-    static final java.awt.Color SQUARE_COLOR = java.awt.Color.black;
-    static final java.awt.Color LINE_COLOR = java.awt.Color.red.darker ().darker ();
-    static final java.awt.Color PLAYER_COLOR = java.awt.Color.cyan;
-    static final java.awt.Color MONSTER_COLOR = java.awt.Color.orange;
-    static final java.awt.Color TICKET_COLOR = java.awt.Color.green;
-    static final int LEVEL_START = 1;
-    static final int CLOCK_START = (6 - LEVEL_START) * 2;
-    static final int LIVES_START = 3;
-    static final int CSCORE_START = 0;
-    static final int RSCORE_START = (40 + LEVEL_START * 10) * 100;
-    static final int TTIME_START = 6 - LEVEL_START;
+    //    static final Color NO_COLOR = Color.white;
+    static final Color CAR_COLOR = Color.red;
+    static final Color SQUARE_COLOR = Color.black;
+    static final Color LINE_COLOR = Color.red.darker().darker();
+    static final Color PLAYER_COLOR = Color.cyan;
+    private final Color monsterColor = Color.orange;
+    private final Color ticketColor = Color.green;
+    private final int LEVEL_START = 1;
+    //    static final int CLOCK_START = (6 - LEVEL_START) * 2;
+//    static final int LIVES_START = 3;
+//    static final int CSCORE_START = 0;
+//    static final int RSCORE_START = (40 + LEVEL_START * 10) * 100;
+    private final int TIME_START = 6 - LEVEL_START;
 
-    public final GameView gv;
+    private final GameView gv;
     public final FieldSquares fss;
-    public java.util.ArrayList<MonsterBall> mbs;
-    public java.util.ArrayList<TimeTicket> tts;
     public final Car car;
-    public State state;
-    private final java.util.Random random;
+    private final Random random;
+    public ArrayList<MonsterBall> mbs;
+    public ArrayList<TimeTicket> tts;
+    public final State state;
 
-    public GameWorld ()
-    {
-        this.random = new java.util.Random ();
-        this.gv = new GameView ();
-        this.gv.setWorld (this);
-        this.fss = new FieldSquares ();
-        createMonsterballs ();
-        createTimeTickets ();
-        this.car = new Car (new java.awt.geom.Point2D.Float (SQUARE_LENGTH / 2 * SQUARE_UNITS, (SQUARE_LENGTH - 1) * SQUARE_UNITS), CAR_COLOR, 270, 50, SQUARE_UNITS, SQUARE_UNITS);
-        this.state = new State ();
-        gv.addKeyListener (new java.awt.event.KeyListener ()
-        {
+    GameWorld() {
+        this.random = new Random();
+        this.gv = new GameView();
+        this.gv.setWorld(this);
+        this.fss = new FieldSquares();
+        createMonsterballs();
+        createTimeTickets();
+        this.car = new Car(new Point2D.Float(SQUARE_LENGTH / 2 * SQUARE_UNITS, (SQUARE_LENGTH - 1) * SQUARE_UNITS), CAR_COLOR, 270, 50, SQUARE_UNITS, SQUARE_UNITS);
+        this.state = new State();
+        gv.addKeyListener(new KeyListener() {
             @Override
-            public void keyTyped (java.awt.event.KeyEvent e)
-            {
+            public void keyTyped(KeyEvent e) {
             }
 
             @Override
-            public void keyPressed (java.awt.event.KeyEvent e)
-            {
-                execute (e.getKeyCode ());
+            public void keyPressed(KeyEvent e) {
+                execute(e.getKeyCode());
             }
 
             @Override
-            public void keyReleased (java.awt.event.KeyEvent e)
-            {
+            public void keyReleased(KeyEvent e) {
             }
         });
-        this.play ();
+        this.play();
     }
 
-    public void createMonsterballs ()
-    {
-        this.mbs = new java.util.ArrayList<> ();
-        int number = random.nextInt (10) + 1;
-        for (int i = 0; i < number; i ++)
-            mbs.add (new MonsterBall (new java.awt.geom.Point2D.Float (random.nextInt (SQUARE_LENGTH * SQUARE_UNITS - 30) + 15, random.nextInt (SQUARE_LENGTH * SQUARE_UNITS - 30) + 15), MONSTER_COLOR, random.nextInt (360), random.nextFloat () * 100 + 10, 6));
+    private void createMonsterballs() {
+        this.mbs = new ArrayList<>();
+        int number = random.nextInt(10) + 1;
+        for (int i = 0; i < number; i++)
+            mbs.add(new MonsterBall(new Point2D.Float(random.nextInt(SQUARE_LENGTH * SQUARE_UNITS - 30) + 15, random.nextInt(SQUARE_LENGTH * SQUARE_UNITS - 30) + 15), monsterColor, random.nextInt(360), random.nextFloat() * 100 + 10, 6));
     }
 
-    public void createTimeTickets ()
-    {
-        this.tts = new java.util.ArrayList<> ();
-        int number = random.nextInt (SQUARE_UNITS) + 1;
-        for (int i = 0; i < number; i ++)
-            tts.add (new TimeTicket (new java.awt.geom.Point2D.Float (random.nextInt (SQUARE_LENGTH * SQUARE_UNITS - 30) + 15, random.nextInt (SQUARE_LENGTH * SQUARE_UNITS - 30) + 15), TICKET_COLOR, TTIME_START, 7, 7));
+    private void createTimeTickets() {
+        this.tts = new ArrayList<>();
+        int number = random.nextInt(SQUARE_UNITS) + 1;
+        for (int i = 0; i < number; i++)
+            tts.add(new TimeTicket(new Point2D.Float(random.nextInt(SQUARE_LENGTH * SQUARE_UNITS - 30) + 15, random.nextInt(SQUARE_LENGTH * SQUARE_UNITS - 30) + 15), ticketColor, TIME_START, 7, 7));
     }
 
-    public void play ()
-    {
-        gv.score.update ();
-        new javax.swing.Timer (GAME_TICK_DELAY, new java.awt.event.ActionListener ()
-        {
-            @Override
-            public void actionPerformed (java.awt.event.ActionEvent evt)
-            {
-                update ((float) (GAME_TICK_DELAY / 1000.0));
-            }
-        }).start ();
+    private void play() {
+        gv.score.update();
+        new Timer(GAME_TICK_DELAY, evt -> update((float) (GAME_TICK_DELAY / 1000.0))).start();
     }
 
-    public void update (float delta)
-    {
-        if ( ! state.isGameOver ())
-        {
-            state.addClock ( - delta);
+    private void update(float delta) {
+        if (!state.isGameOver()) {
+            state.addClock(-delta);
             for (MonsterBall mb : mbs)
-                if (mb.changeLocation (fss, state, delta))
-                {
-                    state.decLives ();
-                    mbs.remove (mb);
+                if (mb.changeLocation(fss, delta)) {
+                    state.decLives();
+                    mbs.remove(mb);
                     break;
                 }
-            car.changeLocation (fss, state, delta);
+            car.changeLocation(fss, state, delta);
             for (TimeTicket tt : tts)
-                if (tt.contains (car.getLocation ()))
-                {
-                    state.setClock (state.getClock () + tt.getSeconds ());
-                    tts.remove (tt);
-                    gv.score.update ();
+                if (tt.contains(car.getLocation())) {
+                    state.setClock(state.getClock() + tt.getSeconds());
+                    tts.remove(tt);
+                    gv.score.update();
                     break;
                 }
         }
-        gv.update ();
+        gv.update();
     }
 
-    public void reset ()
-    {
-        this.fss.reset ();
-        createMonsterballs ();
-        createTimeTickets ();
-        this.car.reset ();
-        this.state.reset ();
+    private void reset() {
+        this.fss.reset();
+        createMonsterballs();
+        createTimeTickets();
+        this.car.reset();
+        this.state.reset();
     }
 
-    public void execute (int keycode)
-    {
-        switch (keycode)
-        {
+    private void execute(int keycode) {
+        switch (keycode) {
             case java.awt.event.KeyEvent.VK_LEFT:
-                car.setHeading (180);
+                car.setHeading(180);
                 break;
             case java.awt.event.KeyEvent.VK_UP:
-                car.setHeading (90);
+                car.setHeading(90);
                 break;
             case java.awt.event.KeyEvent.VK_RIGHT:
-                car.setHeading (0);
+                car.setHeading(0);
                 break;
             case java.awt.event.KeyEvent.VK_DOWN:
-                car.setHeading (270);
+                car.setHeading(270);
                 break;
             case java.awt.event.KeyEvent.VK_SPACE:
-                if (state.isGameOver ())
-                    reset ();
+                if (state.isGameOver())
+                    reset();
                 break;
             case java.awt.event.KeyEvent.VK_I:
-                car.setSpeed (car.getSpeed () + 5);
+                car.setSpeed(car.getSpeed() + 5);
                 break;
             case java.awt.event.KeyEvent.VK_K:
-                tts.add (new TimeTicket (new java.awt.geom.Point2D.Float (random.nextInt (SQUARE_LENGTH * SQUARE_UNITS - 30) + 15, random.nextInt (SQUARE_LENGTH * SQUARE_UNITS - 30) + 15), TICKET_COLOR, TTIME_START, 7, 7));
+                tts.add(new TimeTicket(new java.awt.geom.Point2D.Float(random.nextInt(SQUARE_LENGTH * SQUARE_UNITS - 30) + 15, random.nextInt(SQUARE_LENGTH * SQUARE_UNITS - 30) + 15), ticketColor, TIME_START, 7, 7));
                 break;
             case java.awt.event.KeyEvent.VK_L:
-                car.setSpeed (car.getSpeed () - 5);
+                car.setSpeed(car.getSpeed() - 5);
                 break;
             case java.awt.event.KeyEvent.VK_M:
-                mbs.add (new MonsterBall (new java.awt.geom.Point2D.Float (random.nextInt (SQUARE_LENGTH * SQUARE_UNITS - 30) + 15, random.nextInt (SQUARE_LENGTH * SQUARE_UNITS - 30) + 15), MONSTER_COLOR, random.nextInt (360), random.nextFloat () * 100 + 10, 6));
+                mbs.add(new MonsterBall(new java.awt.geom.Point2D.Float(random.nextInt(SQUARE_LENGTH * SQUARE_UNITS - 30) + 15, random.nextInt(SQUARE_LENGTH * SQUARE_UNITS - 30) + 15), monsterColor, random.nextInt(360), random.nextFloat() * 100 + 10, 6));
                 break;
         }
     }

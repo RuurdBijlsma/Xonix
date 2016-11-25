@@ -1,9 +1,7 @@
 package xonix;
 
-public class Starter
-{
-    public static void main (String [] args)
-    {
-        new GameWorld ();
+public class Starter {
+    public static void main(String[] args) {
+        new GameWorld();
     }
 }
