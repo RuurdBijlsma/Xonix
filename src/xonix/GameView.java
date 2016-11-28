@@ -56,7 +56,7 @@ class GameView extends JFrame {
 
             for (int i = 0; i < GameWorld.SQUARE_LENGTH; i++)
                 for (int j = 0; j < GameWorld.SQUARE_LENGTH; j++) {
-                    FieldSquare fs = gw.fss.elementAt(i, j);
+                    FieldSquare fs = gw.fieldSquares.elementAt(i, j);
                     g.setColor(fs.getColor());
                     g.fillRect((int) fs.getLocation().x, (int) fs.getLocation().y, (int) fs.getSize(), (int) fs.getSize());
                 }
@@ -70,12 +70,12 @@ class GameView extends JFrame {
                 return;
             }
 
-            for (MonsterBall mb : gw.mbs) {
+            for (MonsterBall mb : gw.monsterBalls) {
                 g.setColor(mb.getColor());
                 g.fillArc((int) mb.getLocation().x, (int) mb.getLocation().y, (int) mb.getRadius(), (int) mb.getRadius(), 0, 360);
             }
 
-            for (TimeTicket tt : gw.tts) {
+            for (TimeTicket tt : gw.timeTickets) {
                 g.setColor(tt.getColor());
                 g.fillRect((int) tt.getLocation().x, (int) tt.getLocation().y, (int) tt.getWidth(), (int) tt.getHeight());
             }

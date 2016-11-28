@@ -3,13 +3,7 @@ package xonix;
 import java.awt.*;
 import java.awt.geom.Point2D;
 
-class Car extends Movable implements IColorable, ISteerable{
-    private Point2D.Float loc;
-    private Color color;
-    private int heading;
-    private float speed;
-    private int width;
-    private int height;
+class Car extends GameObject{
 
     Car(final Point2D.Float loc, final Color color, final int heading, final int speed, final int width, final int height) {
         setLocation(loc);
@@ -30,70 +24,15 @@ class Car extends Movable implements IColorable, ISteerable{
     }
 
     @Override
-    public Point2D.Float getLocation() {
-        return loc;
-    }
+    boolean checkCollisions(FieldSquares fieldSquares, Point2D.Float prevPos,  Point2D.Float nextPos, State state){
+        FieldSquare prevSquare = GameWorld.getSquareAtPosition(fieldSquares, prevPos);
+        FieldSquare nextSquare = GameWorld.getSquareAtPosition(fieldSquares, nextPos);
+        if (nextSquare.getColor() == GameWorld.SQUARE_COLOR)
+            nextSquare.setColor(GameWorld.LINE_COLOR);
 
-    private void setLocation(Point2D.Float loc) {
-        this.loc = loc;
-    }
+        else if (nextSquare.getColor() == GameWorld.PLAYER_COLOR && prevSquare.getColor() == GameWorld.LINE_COLOR)
+            state.addcscore(fieldSquares.fillSquares());
 
-    public Color getColor() {
-        return color;
-    }
-
-    public void setColor(final Color color) {
-        this.color = color;
-    }
-
-    public int getHeading() {
-        return heading;
-    }
-
-    public void setHeading(final int heading) {
-        this.heading = heading;
-    }
-
-    public float getSpeed() {
-        return speed;
-    }
-
-    public void setSpeed(final float speed) {
-        this.speed = speed;
-    }
-
-    public int getWidth() {
-        return width;
-    }
-
-    public void setWidth(final int width) {
-        this.width = width;
-    }
-
-    public int getHeight() {
-        return height;
-    }
-
-    @Override
-    public void setLocation(double x, double y) {
-
-    }
-
-    public void setHeight(final int height) {
-        this.height = height;
-    }
-
-    @Override
-    boolean changeLocation(FieldSquares fss, float delta, State state) {
-        Point2D.Float prev = (Point2D.Float) getLocation();
-        Point2D.Float next = nextLocation(delta);
-        FieldSquare fsprev = fss.elementAt((int) (prev.x / GameWorld.SQUARE_UNITS + 0.5), (int) (prev.y / GameWorld.SQUARE_UNITS + 0.5));
-        FieldSquare fsnext = fss.elementAt((int) (next.x / GameWorld.SQUARE_UNITS + 0.5), (int) (next.y / GameWorld.SQUARE_UNITS + 0.5));
-        if (fsnext.getColor() == GameWorld.SQUARE_COLOR)
-            fsnext.setColor(GameWorld.LINE_COLOR);
-        else if (fsnext.getColor() == GameWorld.PLAYER_COLOR && fsprev.getColor() == GameWorld.LINE_COLOR)
-            state.addcscore(fss.fillSquares());
-        getLocation().setLocation(next);
         return false;
     }
 

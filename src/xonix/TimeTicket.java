@@ -3,15 +3,15 @@ package xonix;
 import java.awt.Color;
 import java.awt.geom.Point2D;
 
-class TimeTicket {
+class TimeTicket implements IColorable, IMovable{
 
     private Point2D.Float loc;
     private Color color;
-    private float width;
-    private float height;
+    private int width;
+    private int height;
     private int seconds;
 
-    TimeTicket(final Point2D.Float loc, final Color color, int seconds, final float width, final float height) {
+    TimeTicket(final Point2D.Float loc, final Color color, int seconds, final int width, final int height) {
         setLocation(loc);
         setColor(color);
         setWidth(width);
@@ -19,35 +19,35 @@ class TimeTicket {
         setSeconds(seconds);
     }
 
-    Point2D.Float getLocation() {
+    public Point2D.Float getLocation() {
         return loc;
     }
 
-    private void setLocation(Point2D.Float loc) {
+    public void setLocation(Point2D.Float loc) {
         this.loc = loc;
     }
 
-    Color getColor() {
+    public Color getColor() {
         return color;
     }
 
-    private void setColor(final Color color) {
+    public void setColor(final Color color) {
         this.color = color;
     }
 
-    float getWidth() {
+    public int getWidth() {
         return width;
     }
 
-    private void setWidth(final float width) {
+    public void setWidth(final int width) {
         this.width = width;
     }
 
-    float getHeight() {
+    public int getHeight() {
         return height;
     }
 
-    private void setHeight(final float height) {
+    public void setHeight(final int height) {
         this.height = height;
     }
 

@@ -36,7 +36,7 @@ class State {
     public void setClock(float clock) {
         this.clock = clock;
         if ((int) clock == 0) {
-            decLives();
+            decreaseLives();
             this.clock = (6 - level) * 2;
         }
     }
@@ -53,7 +53,7 @@ class State {
         this.lives = lives;
     }
 
-    public void decLives() {
+    public void decreaseLives() {
         setLives(getLives() - 1);
         if (getLives() == 0)
             gameOver = true;

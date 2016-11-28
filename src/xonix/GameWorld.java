@@ -19,8 +19,8 @@ public class GameWorld {
     static final Color SQUARE_COLOR = Color.black;
     static final Color LINE_COLOR = Color.red.darker().darker();
     static final Color PLAYER_COLOR = Color.cyan;
-    private final Color monsterColor = Color.orange;
-    private final Color ticketColor = Color.green;
+    private final Color MONSTER_COLOR = Color.orange;
+    private final Color TICKET_COLOR = Color.green;
     private final int LEVEL_START = 1;
     //    static final int CLOCK_START = (6 - LEVEL_START) * 2;
 //    static final int LIVES_START = 3;
@@ -28,24 +28,24 @@ public class GameWorld {
 //    static final int RSCORE_START = (40 + LEVEL_START * 10) * 100;
     private final int TIME_START = 55 - LEVEL_START;
 
-    private final GameView gv;
-    public final FieldSquares fss;
-    public final Car car;
+    private final GameView gameView;
+    final FieldSquares fieldSquares;
+    final Car car;
     private final Random random;
-    public ArrayList<MonsterBall> mbs;
-    public ArrayList<TimeTicket> tts;
-    public final State state;
+    ArrayList<MonsterBall> monsterBalls;
+    ArrayList<TimeTicket> timeTickets;
+    final State state;
 
     GameWorld() {
-        this.random = new Random();
-        this.gv = new GameView();
-        this.gv.setWorld(this);
-        this.fss = new FieldSquares();
+        random = new Random();
+        gameView = new GameView();
+        gameView.setWorld(this);
+        fieldSquares = new FieldSquares();
         createMonsterballs();
         createTimeTickets();
-        this.car = new Car(new Point2D.Float(SQUARE_LENGTH / 2 * SQUARE_UNITS, (SQUARE_LENGTH - 1) * SQUARE_UNITS), CAR_COLOR, 270, 50, SQUARE_UNITS, SQUARE_UNITS);
-        this.state = new State();
-        gv.addKeyListener(new KeyListener() {
+        car = new Car(new Point2D.Float(SQUARE_LENGTH / 2 * SQUARE_UNITS, (SQUARE_LENGTH - 1) * SQUARE_UNITS), CAR_COLOR, 270, 50, SQUARE_UNITS, SQUARE_UNITS);
+        state = new State();
+        gameView.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {
             }
@@ -62,48 +62,63 @@ public class GameWorld {
         this.play();
     }
 
+    static FieldSquare getSquareAtPosition(FieldSquares fieldSquares, Point2D.Float position) {
+        return fieldSquares.elementAt((int) (position.x / GameWorld.SQUARE_UNITS + 0.5), (int) (position.y / GameWorld.SQUARE_UNITS + 0.5));
+    }
+
+    static FieldSquare getSquareAtPosition(FieldSquares fieldSquares, float x, float y) {
+        return getSquareAtPosition(fieldSquares, new Point2D.Float(x, y));
+    }
+
     private void createMonsterballs() {
-        this.mbs = new ArrayList<>();
+        monsterBalls = new ArrayList<>();
         int number = random.nextInt(10) + 1;
-        for (int i = 0; i < number; i++)
-            mbs.add(new MonsterBall(new Point2D.Float(random.nextInt(SQUARE_LENGTH * SQUARE_UNITS - 30) + 15, random.nextInt(SQUARE_LENGTH * SQUARE_UNITS - 30) + 15), monsterColor, random.nextInt(360), random.nextFloat() * 100 + 10, 6));
+        for (int i = 0; i < number; i++) {
+            Point2D.Float location = new Point2D.Float(random.nextInt(SQUARE_LENGTH * SQUARE_UNITS - 30) + 15, random.nextInt(SQUARE_LENGTH * SQUARE_UNITS - 30) + 15);
+            MonsterBall ball = new MonsterBall(location, MONSTER_COLOR, random.nextInt(360), random.nextFloat() * 100 + 10, 6);
+            monsterBalls.add(ball);
+        }
     }
 
     private void createTimeTickets() {
-        this.tts = new ArrayList<>();
+        timeTickets = new ArrayList<>();
         int number = random.nextInt(SQUARE_UNITS) + 1;
-        for (int i = 0; i < number; i++)
-            tts.add(new TimeTicket(new Point2D.Float(random.nextInt(SQUARE_LENGTH * SQUARE_UNITS - 30) + 15, random.nextInt(SQUARE_LENGTH * SQUARE_UNITS - 30) + 15), ticketColor, TIME_START, 7, 7));
+        for (int i = 0; i < number; i++) {
+            Point2D.Float location=new Point2D.Float(random.nextInt(SQUARE_LENGTH * SQUARE_UNITS - 30) + 15, random.nextInt(SQUARE_LENGTH * SQUARE_UNITS - 30) + 15);
+            int ticketSize = 7;
+            TimeTicket ticket = new TimeTicket(location, TICKET_COLOR, TIME_START, ticketSize, ticketSize);
+            timeTickets.add(ticket);
+        }
     }
 
     private void play() {
-        gv.score.update();
+        gameView.score.update();
         new Timer(GAME_TICK_DELAY, evt -> update((float) (GAME_TICK_DELAY / 1000.0))).start();
     }
 
     private void update(float delta) {
         if (!state.isGameOver()) {
             state.addClock(-delta);
-            for (MonsterBall mb : mbs)
-                if (mb.changeLocation(fss, delta, null)) {
-                    state.decLives();
-                    mbs.remove(mb);
+            for (MonsterBall monsterBall : monsterBalls)
+                if (monsterBall.changeLocation(fieldSquares, delta, null)) {//if monsterball collides with player line
+                    state.decreaseLives();
+                    monsterBalls.remove(monsterBall);
                     break;
                 }
-            car.changeLocation(fss, delta, state);
-            for (TimeTicket tt : tts)
-                if (tt.contains(car.getLocation())) {
-                    state.setClock(state.getClock() + tt.getSeconds());
-                    tts.remove(tt);
-                    gv.score.update();
+            car.changeLocation(fieldSquares, delta, state);
+            for (TimeTicket timeTicket : timeTickets)
+                if (timeTicket.contains(car.getLocation())) {
+                    state.setClock(state.getClock() + timeTicket.getSeconds());
+                    timeTickets.remove(timeTicket);
+                    gameView.score.update();
                     break;
                 }
         }
-        gv.update();
+        gameView.update();
     }
 
     private void reset() {
-        this.fss.reset();
+        this.fieldSquares.reset();
         createMonsterballs();
         createTimeTickets();
         this.car.reset();
@@ -132,13 +147,13 @@ public class GameWorld {
                 car.setSpeed(car.getSpeed() + 5);
                 break;
             case KeyEvent.VK_K:
-                tts.add(new TimeTicket(new Point2D.Float(random.nextInt(SQUARE_LENGTH * SQUARE_UNITS - 30) + 15, random.nextInt(SQUARE_LENGTH * SQUARE_UNITS - 30) + 15), ticketColor, TIME_START, 7, 7));
+                timeTickets.add(new TimeTicket(new Point2D.Float(random.nextInt(SQUARE_LENGTH * SQUARE_UNITS - 30) + 15, random.nextInt(SQUARE_LENGTH * SQUARE_UNITS - 30) + 15), TICKET_COLOR, TIME_START, 7, 7));
                 break;
             case KeyEvent.VK_L:
                 car.setSpeed(car.getSpeed() - 5);
                 break;
             case KeyEvent.VK_M:
-                mbs.add(new MonsterBall(new Point2D.Float(random.nextInt(SQUARE_LENGTH * SQUARE_UNITS - 30) + 15, random.nextInt(SQUARE_LENGTH * SQUARE_UNITS - 30) + 15), monsterColor, random.nextInt(360), random.nextFloat() * 100 + 10, 6));
+                monsterBalls.add(new MonsterBall(new Point2D.Float(random.nextInt(SQUARE_LENGTH * SQUARE_UNITS - 30) + 15, random.nextInt(SQUARE_LENGTH * SQUARE_UNITS - 30) + 15), MONSTER_COLOR, random.nextInt(360), random.nextFloat() * 100 + 10, 6));
                 break;
         }
     }
