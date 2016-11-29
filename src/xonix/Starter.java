@@ -1,5 +1,8 @@
 package xonix;
 
+/**
+ * Main class
+ */
 public class Starter {
     /**
      * Initializes gameworld
