@@ -8,6 +8,14 @@ import java.awt.*;
  * Main UI frame
  */
 class GameView extends JFrame {
+    private static GameView instance = null;
+
+    public static GameView getInstance() {
+        if (instance == null) {
+            instance = new GameView();
+        }
+        return instance;
+    }
     /**
      * Panel containing score information
      */
@@ -110,7 +118,7 @@ class GameView extends JFrame {
     final ScoreView score;
     private final MapView map;
 
-    GameView() {
+    private GameView() {
         this.gameWorld = null;
         this.setTitle("Xonix Game");
         JPanel all = new JPanel();

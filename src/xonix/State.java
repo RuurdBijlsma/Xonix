@@ -4,6 +4,15 @@ package xonix;
  * Contains state of the game
  */
 class State {
+    private static State instance = null;
+
+    public static State getInstance() {
+        if (instance == null) {
+            instance = new State();
+        }
+        return instance;
+    }
+
     private int level;
     private float clock;
     private int lives;
@@ -11,18 +20,18 @@ class State {
     private int requiredScore;
     private boolean gameOver;
 
-    State() {
+    private State() {
         this.reset();
     }
 
     /**
      * Resets state
      */
-    public void reset() {
+    void reset() {
         setLevel(1);
     }
 
-    public int getLevel() {
+    int getLevel() {
         return level;
     }
 
@@ -30,7 +39,7 @@ class State {
      * Set the level, a higher leven means higher required score and less given time
      * @param level level that has been reached
      */
-    public void setLevel(int level) {
+    private void setLevel(int level) {
         this.level = level;
         this.clock = (20 - level) * 2;
         this.lives = 3;
@@ -39,11 +48,11 @@ class State {
         this.gameOver = false;
     }
 
-    public float getClock() {
+    float getClock() {
         return clock;
     }
 
-    public void setClock(float clock) {
+    void setClock(float clock) {
         this.clock = clock;
         if ((int) clock == 0) {
             decreaseLives();
@@ -51,39 +60,39 @@ class State {
         }
     }
 
-    public void addClock(float clock) {
+    void addClock(float clock) {
         setClock(this.clock + clock);
     }
 
-    public int getLives() {
+    int getLives() {
         return lives;
     }
 
-    public void setLives(int lives) {
+    private void setLives(int lives) {
         if (lives <= 0)
             setGameOver(true);
         this.lives = lives;
     }
 
-    public void decreaseLives() {
+    void decreaseLives() {
         setLives(getLives() - 1);
     }
 
-    public int getCurrentScore() {
+    int getCurrentScore() {
         return currentScore;
     }
 
-    public void setCurrentScore(int cscore) {
+    private void setCurrentScore(int cscore) {
         this.currentScore = cscore;
         if (cscore > requiredScore)
             setLevel(level + 1);
     }
 
-    public void addCurrentScore(int currentScore) {
+    void addCurrentScore(int currentScore) {
         setCurrentScore(this.currentScore + currentScore);
     }
 
-    public int getRequiredScore() {
+    int getRequiredScore() {
         return requiredScore;
     }
 
@@ -91,11 +100,11 @@ class State {
         this.requiredScore = requiredScore;
     }
 
-    public boolean isGameOver() {
+    boolean isGameOver() {
         return gameOver;
     }
 
-    public void setGameOver(boolean gameOver) {
+    private void setGameOver(boolean gameOver) {
         this.gameOver = gameOver;
     }
 

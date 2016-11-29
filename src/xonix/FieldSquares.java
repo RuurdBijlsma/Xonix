@@ -1,17 +1,24 @@
 package xonix;
 
-import java.awt.Color;
-import java.awt.Point;
+import java.awt.*;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.Stack;
 
 class FieldSquares {
+    private static FieldSquares instance = null;
+
+    public static FieldSquares getInstance() {
+        if (instance == null) {
+            instance = new FieldSquares();
+        }
+        return instance;
+    }
 
     private final FieldSquare[][] fieldSquares;
     private final Color[][] colors;
 
-    FieldSquares() {
+    private FieldSquares() {
         fieldSquares = new FieldSquare[GameWorld.SQUARE_LENGTH][GameWorld.SQUARE_LENGTH];
         setFields(GameWorld.PLAYER_COLOR, GameWorld.SQUARE_COLOR);
         colors = new Color[GameWorld.SQUARE_LENGTH][GameWorld.SQUARE_LENGTH];
@@ -19,6 +26,7 @@ class FieldSquares {
 
     /**
      * Select a FieldSquare at a given position
+     *
      * @param x X position of requested element
      * @param y Y position of requested element
      * @return FieldSquare at given position
@@ -35,7 +43,7 @@ class FieldSquares {
     }
 
     /**
-     * @param edge Color of the walls
+     * @param edge  Color of the walls
      * @param inner Color of the playing field
      */
     private void setFields(Color edge, Color inner) {
@@ -49,6 +57,7 @@ class FieldSquares {
 
     /**
      * Changes color of the area that has been selected by the player
+     *
      * @return Amount of squares that have been converted to cyan
      */
     int fillSquares() {
@@ -58,6 +67,7 @@ class FieldSquares {
 
     /**
      * Changes dark red player line to cyan line
+     *
      * @return Amount of squares that have been converted to cyan
      */
     private int lineToPlayerColor() {
@@ -83,6 +93,7 @@ class FieldSquares {
     /**
      * Fills all areas except for the largest one.
      * Used for filling smaller half of field after player creates division
+     *
      * @return Size of filled area(s)
      */
     private int fillAreas() {
@@ -157,6 +168,7 @@ class FieldSquares {
 
     /**
      * Flood fills cyan from a given position
+     *
      * @param x Starting location x
      * @param y Starting location y
      */
