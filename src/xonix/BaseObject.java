@@ -20,7 +20,7 @@ public abstract class BaseObject implements IMovable, ISteerable, IColorable {
      * @param that Location to check
      * @return Whether this object contains the given location
      */
-    boolean contains(final Point2D.Float that) {
+    public boolean contains(final Point2D.Float that) {
         Point2D.Float centerLocation = new Point2D.Float(this.getLocation().x + this.getWidth() / 2, this.getLocation().y + this.getHeight() / 2);
 
         int margin = 10;

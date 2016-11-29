@@ -6,10 +6,10 @@ import java.awt.geom.Point2D;
 /**
  * Timeticket class which contains location, color, size and seconds value
  */
-class TimeTicket extends BaseObject{
+public class TimeTicket extends BaseObject{
     private int seconds;
 
-    TimeTicket(final Point2D.Float loc, final Color color, int seconds, final int width, final int height) {
+    public TimeTicket(final Point2D.Float loc, final Color color, int seconds, final int width, final int height) {
         setLocation(loc);
         setColor(color);
         setWidth(width);
@@ -17,7 +17,7 @@ class TimeTicket extends BaseObject{
         setSeconds(seconds);
     }
 
-    int getSeconds() {
+    public int getSeconds() {
         return seconds;
     }
 

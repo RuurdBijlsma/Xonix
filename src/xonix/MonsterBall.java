@@ -3,7 +3,7 @@ package xonix;
 import java.awt.*;
 import java.awt.geom.Point2D;
 
-class MonsterBall extends GameObject{
+public class MonsterBall extends GameObject{
     private float radius;
 
     /**
@@ -13,7 +13,7 @@ class MonsterBall extends GameObject{
      * @param speed Speed of the monsterball
      * @param radius Radius of the monsterball
      */
-    MonsterBall(final Point2D.Float loc, final Color color, final int heading, final float speed, final float radius) {
+    public MonsterBall(final Point2D.Float loc, final Color color, final int heading, final float speed, final float radius) {
         setLocation(loc);
         setColor(color);
         setHeading(heading);

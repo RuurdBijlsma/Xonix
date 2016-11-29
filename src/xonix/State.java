@@ -3,7 +3,7 @@ package xonix;
 /**
  * Contains state of the game
  */
-class State {
+public class State {
     private static State instance = null;
 
     public static State getInstance() {
@@ -48,11 +48,11 @@ class State {
         this.gameOver = false;
     }
 
-    float getClock() {
+    public float getClock() {
         return clock;
     }
 
-    void setClock(float clock) {
+    public void setClock(float clock) {
         this.clock = clock;
         if ((int) clock == 0) {
             decreaseLives();
@@ -74,7 +74,7 @@ class State {
         this.lives = lives;
     }
 
-    void decreaseLives() {
+    public void decreaseLives() {
         setLives(getLives() - 1);
     }
 

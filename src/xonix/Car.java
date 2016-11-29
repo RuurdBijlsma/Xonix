@@ -3,7 +3,7 @@ package xonix;
 import java.awt.*;
 import java.awt.geom.Point2D;
 
-class Car extends GameObject{
+public class Car extends GameObject{
 
     /**
      * @param loc Location of the car

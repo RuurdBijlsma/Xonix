@@ -1,10 +1,14 @@
 package xonix.Commands;
 
+import xonix.Application;
+import xonix.Car;
+
 import java.awt.event.ActionEvent;
 
-public class DecreaseSpeed extends Command{
+public class DecreaseSpeed extends Command {
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        Car car = Application.controller.model.car;
+        car.setSpeed(car.getSpeed() - 5);
     }
 }

@@ -1,6 +1,10 @@
 package xonix;
 
+import xonix.Commands.MonsterBallCollision;
+import xonix.Commands.TimeTicketCollision;
+
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.Random;
@@ -19,25 +23,25 @@ public class GameWorld {
         return instance;
     }
 
-    static final int SQUARE_LENGTH = 102;
-    static final int SQUARE_UNITS = 5;
+    public static final int SQUARE_LENGTH = 102;
+    public static final int SQUARE_UNITS = 5;
     public static final int GAME_TICK_DELAY = 40;
     //    static final Color NO_COLOR = Color.white;
     static final Color CAR_COLOR = Color.red;
     static final Color SQUARE_COLOR = Color.black;
     static final Color LINE_COLOR = Color.red.darker().darker();
     static final Color PLAYER_COLOR = Color.cyan;
-    static final Color MONSTER_COLOR = Color.orange;
-    static final Color TICKET_COLOR = Color.green;
+    public static final Color MONSTER_COLOR = Color.orange;
+    public static final Color TICKET_COLOR = Color.green;
     private static final int LEVEL_START = 1;
-    static final int TIME_START = 55 - LEVEL_START;
+    public static final int TIME_START = 55 - LEVEL_START;
 
-    final FieldSquares fieldSquares;
+    public final FieldSquares fieldSquares;
     public final Car car;
     private final Random random;
-    ArrayList<MonsterBall> monsterBalls;
-    ArrayList<TimeTicket> timeTickets;
-    final State state;
+    public ArrayList<MonsterBall> monsterBalls;
+    public ArrayList<TimeTicket> timeTickets;
+    public final State state;
 
     private GameWorld() {
         random = new Random();
@@ -108,19 +112,14 @@ public class GameWorld {
     public void update(float delta) {
         if (!state.isGameOver()) {
             state.addClock(-delta);
-            for (MonsterBall monsterBall : monsterBalls)
-                if (monsterBall.changeLocation(fieldSquares, delta, null)) {//if monsterball collides with player line
-                    state.decreaseLives();
-                    monsterBalls.remove(monsterBall);
-                    break;
-                }
+
+            MonsterBallCollision monsterCollision = new MonsterBallCollision();
+            monsterCollision.actionPerformed(new ActionEvent(delta, 0, "MonsterBallCollision"));
+
+            TimeTicketCollision ticketCollision = new TimeTicketCollision();
+            ticketCollision.actionPerformed(new ActionEvent(this, 0, "TimeTicketCollision"));
+
             car.changeLocation(fieldSquares, delta, state);
-            for (TimeTicket timeTicket : timeTickets)
-                if (timeTicket.contains(car.getLocation())) {
-                    state.setClock(state.getClock() + timeTicket.getSeconds());
-                    timeTickets.remove(timeTicket);
-                    break;
-                }
         }
     }
 
