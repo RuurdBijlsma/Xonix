@@ -2,6 +2,10 @@ package xonix;
 
 import java.awt.geom.Point2D;
 
+
+/**
+ * Interface for any moveable objects
+ */
 public interface IMovable {
     int getWidth();
     int getHeight();

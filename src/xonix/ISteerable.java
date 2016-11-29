@@ -1,7 +1,7 @@
 package xonix;
 
 /**
- * Created by Ruurd on 25-11-2016.
+ * Interface for any steerable objects
  */
 interface ISteerable {
     int getHeading();

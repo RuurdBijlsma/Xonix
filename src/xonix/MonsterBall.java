@@ -6,6 +6,13 @@ import java.awt.geom.Point2D;
 class MonsterBall extends GameObject{
     private float radius;
 
+    /**
+     * @param loc Location of the monsterball
+     * @param color Color of the monsterball
+     * @param heading Heading of the monsterball (degrees)
+     * @param speed Speed of the monsterball
+     * @param radius Radius of the monsterball
+     */
     MonsterBall(final Point2D.Float loc, final Color color, final int heading, final float speed, final float radius) {
         setLocation(loc);
         setColor(color);
@@ -22,6 +29,13 @@ class MonsterBall extends GameObject{
         this.radius = radius;
     }
 
+    /**
+     * @param fieldSquares The object which contains all field squares
+     * @param prevPos      Previous position
+     * @param nextPos      Next position
+     * @param state        Game state
+     * @return True if collision with player line happens
+     */
     @Override
     boolean checkCollisions(FieldSquares fieldSquares, Point2D.Float prevPos,  Point2D.Float nextPos, State state){
         FieldSquare prevSquare = GameWorld.getSquareAtPosition(fieldSquares, prevPos);
@@ -45,6 +59,9 @@ class MonsterBall extends GameObject{
         return false;
     }
 
+    /**
+     * @return String containing monsterball information
+     */
     @Override
     public String toString() {
         return "loc=" + loc.x + "," + loc.y + " color=[" + color.getRed() + "," + color.getGreen() + "," + color.getBlue() + "]" + " heading=" + heading + " speed=" + speed + " radius=" + radius;

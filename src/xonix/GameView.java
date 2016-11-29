@@ -4,17 +4,22 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
+/**
+ * Main UI frame
+ */
 class GameView extends JFrame {
-    class ScoreView extends JPanel {
+    /**
+     * Panel containing score information
+     */
+    public class ScoreView extends JPanel {
         final private JLabel level;
         final private JLabel time;
         final private JLabel lives;
-        final private JLabel cscore;
-        final private JLabel rscore;
+        final private JLabel currentScore;
 
         ScoreView() {
-            this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
-            this.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
+            this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+            this.setBorder(BorderFactory.createEmptyBorder(0, 10, 10, 10));
             level = new JLabel("");
             this.add(level);
             this.add(Box.createHorizontalGlue());
@@ -24,45 +29,61 @@ class GameView extends JFrame {
             lives = new JLabel("");
             this.add(lives);
             this.add(Box.createHorizontalGlue());
-            cscore = new JLabel("");
-            this.add(cscore);
+            currentScore = new JLabel("");
+            this.add(currentScore);
             this.add(Box.createHorizontalGlue());
-            rscore = new JLabel("");
-            this.add(rscore);
+            
+            Color color = new Color(10, 10, 10);
+
+            currentScore.setForeground(color);
+            lives.setForeground(color);
+            time.setForeground(color);
+            level.setForeground(color);
+
+            Font font = new Font("Consolas", Font.BOLD, 14);
+
+            currentScore.setFont(font);
+            lives.setFont(font);
+            time.setFont(font);
+            level.setFont(font);
         }
 
-        void update() {
-            this.level.setText("Current level: " + gw.state.getLevel());
-            this.time.setText("Remaining time: " + (int) gw.state.getClock());
-            this.lives.setText("Lives left: " + gw.state.getLives());
-            this.cscore.setText("Current score: " + gw.state.getcscore());
-            this.rscore.setText("Required score: " + gw.state.getrscore());
+        /**
+         * Shows updated stats in the labels
+         */
+        public void update() {
+            this.level.setText("Level: " + gameWorld.state.getLevel());
+            this.time.setText("Time:  " + (int) gameWorld.state.getClock());
+            this.lives.setText("Lives: " + gameWorld.state.getLives());
+            this.currentScore.setText("Score: " + gameWorld.state.getCurrentScore()+" / " + gameWorld.state.getRequiredScore());
         }
     }
 
-    class MapView extends JPanel {
+    private class MapView extends JPanel {
 
-        MapView() {
-            super();
-        }
-
+        /**
+         * Repaints mapview
+         */
         void update() {
             this.repaint();
         }
 
+        /**
+         * Renders world, gameover text, monsterballs, timetickets and car
+         */
         @Override
         public void paint(Graphics g) {
             super.paint(g);
 
-            for (int i = 0; i < GameWorld.SQUARE_LENGTH; i++)
-                for (int j = 0; j < GameWorld.SQUARE_LENGTH; j++) {
-                    FieldSquare fs = gw.fieldSquares.elementAt(i, j);
-                    g.setColor(fs.getColor());
-                    g.fillRect((int) fs.getLocation().x, (int) fs.getLocation().y, (int) fs.getSize(), (int) fs.getSize());
+            for (int x = 0; x < GameWorld.SQUARE_LENGTH; x++)
+                for (int y = 0; y < GameWorld.SQUARE_LENGTH; y++) {
+                    FieldSquare fieldSquare = gameWorld.fieldSquares.elementAt(x, y);
+                    g.setColor(fieldSquare.getColor());
+                    g.fillRect((int) fieldSquare.getLocation().x, (int) fieldSquare.getLocation().y, (int) fieldSquare.getSize(), (int) fieldSquare.getSize());
                 }
 
-            if (gw.state.isGameOver()) {
-                Font font = new Font("Helvetica", Font.BOLD, 18);
+            if (gameWorld.state.isGameOver()) {
+                Font font = new Font("Consolas", Font.BOLD, 25);
                 FontMetrics metrics = g.getFontMetrics(font);
                 g.setColor(Color.RED);
                 g.setFont(font);
@@ -70,46 +91,59 @@ class GameView extends JFrame {
                 return;
             }
 
-            for (MonsterBall mb : gw.monsterBalls) {
-                g.setColor(mb.getColor());
-                g.fillArc((int) mb.getLocation().x, (int) mb.getLocation().y, (int) mb.getRadius(), (int) mb.getRadius(), 0, 360);
+            for (MonsterBall monsterBall : gameWorld.monsterBalls) {
+                g.setColor(monsterBall.getColor());
+                g.fillArc((int) monsterBall.getLocation().x, (int) monsterBall.getLocation().y, (int) monsterBall.getRadius(), (int) monsterBall.getRadius(), 0, 360);
             }
 
-            for (TimeTicket tt : gw.timeTickets) {
-                g.setColor(tt.getColor());
-                g.fillRect((int) tt.getLocation().x, (int) tt.getLocation().y, (int) tt.getWidth(), (int) tt.getHeight());
+            for (TimeTicket timeTicket : gameWorld.timeTickets) {
+                g.setColor(timeTicket.getColor());
+                g.fillRect((int) timeTicket.getLocation().x, (int) timeTicket.getLocation().y, timeTicket.getWidth(), timeTicket.getHeight());
             }
 
-            g.setColor(gw.car.getColor());
-            g.fillRect((int) gw.car.getLocation().x, (int) gw.car.getLocation().y, gw.car.getWidth(), gw.car.getHeight());
+            g.setColor(gameWorld.car.getColor());
+            g.fillRect((int) gameWorld.car.getLocation().x, (int) gameWorld.car.getLocation().y, gameWorld.car.getWidth(), gameWorld.car.getHeight());
         }
     }
 
-    private GameWorld gw;
-    public final ScoreView score;
+    private GameWorld gameWorld;
+    final ScoreView score;
     private final MapView map;
 
     GameView() {
-        this.gw = null;
+        this.gameWorld = null;
         this.setTitle("Xonix Game");
         JPanel all = new JPanel();
-        all.setLayout(new BoxLayout(all, BoxLayout.Y_AXIS));
-        all.setBorder(new EmptyBorder(0, 30, 0, 30));
-        score = new ScoreView();
-        all.add(score);
-        map = new MapView();
-        map.setAlignmentX(CENTER_ALIGNMENT);
-        all.add(map);
+
         this.add(all);
         this.setMenu();
         this.pack();
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        this.setSize(new Dimension(630, 610));
+        this.setSize(new Dimension(516, 650));
+        this.setLocationRelativeTo(null);
         this.setResizable(false);
         this.setVisible(true);
+
+        map = new MapView();
+        all.add(map);
+
+        score = new ScoreView();
+        all.add(score);
+
+        all.setBackground(Color.cyan);
+        map.setBackground(Color.cyan);
+        score.setBackground(Color.cyan);
+
+        all.setLayout(new BoxLayout(all, BoxLayout.Y_AXIS));
+        all.setBorder(new EmptyBorder(0, 0, 0, 0));
+
+        map.setAlignmentX(CENTER_ALIGNMENT);
     }
 
+    /**
+     * Creates menu
+     */
     private void setMenu() {
         JMenuBar menuBar;
         JMenu menu;
@@ -142,11 +176,14 @@ class GameView extends JFrame {
         this.setJMenuBar(menuBar);
     }
 
-    public void setWorld(GameWorld gw) {
-        this.gw = gw;
+    void setWorld(GameWorld gw) {
+        this.gameWorld = gw;
     }
 
-    public void update() {
+    /**
+     * Update score and map
+     */
+    void update() {
         score.update();
         map.update();
     }

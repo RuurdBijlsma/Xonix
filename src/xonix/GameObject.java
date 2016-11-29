@@ -1,19 +1,16 @@
 package xonix;
 
-import java.awt.*;
 import java.awt.geom.Point2D;
 
 /**
- * Created by Ruurd on 25-11-2016.
+ * Abstract class to extend for moving objects
  */
-abstract class GameObject implements IMovable, ISteerable, IColorable {
-    Point2D.Float loc;
-    Color color;
-    int heading;
-    float speed;
-    int width;
-    int height;
-
+abstract class GameObject extends BaseObject {
+    /**
+     * Calculates an objects next position based on heading, speed and location
+     * @param delta Time since last update
+     * @return Next location for the gameobject to move to
+     */
     Point2D.Float nextLocation(float delta) {
         double radians = Math.toRadians(getHeading());
         float newx = (float) (getLocation().getX() + delta * getSpeed() * (float) Math.cos(radians)),
@@ -29,6 +26,12 @@ abstract class GameObject implements IMovable, ISteerable, IColorable {
         return new Point2D.Float(newx, newy);
     }
 
+    /**
+     * @param fieldSquares The object which contains all field squares
+     * @param delta Time since last update
+     * @param state Game state
+     * @return True if collision is detected
+     */
     boolean changeLocation(FieldSquares fieldSquares, float delta, State state) {
         Point2D.Float prevPos = getLocation();
         Point2D.Float nextPos = nextLocation(delta);
@@ -40,55 +43,13 @@ abstract class GameObject implements IMovable, ISteerable, IColorable {
         return false;
     }
 
+    /**
+     * Method that should be implemented in class that extends this
+     * @param fieldSquares The object which contains all field squares
+     * @param prevPos Previous position
+     * @param nextPos Next position
+     * @param state Game state
+     * @return True if collision is detected
+     */
     abstract boolean checkCollisions(FieldSquares fieldSquares, Point2D.Float prevPos, Point2D.Float nextPos, State state);
-
-
-    @Override
-    public Point2D.Float getLocation() {
-        return loc;
-    }
-
-    public void setLocation(Point2D.Float loc) {
-        this.loc = loc;
-    }
-
-    public Color getColor() {
-        return color;
-    }
-
-    public void setColor(final Color color) {
-        this.color = color;
-    }
-
-    public int getHeading() {
-        return heading;
-    }
-
-    public void setHeading(final int heading) {
-        this.heading = heading;
-    }
-
-    public float getSpeed() {
-        return speed;
-    }
-
-    public void setSpeed(final float speed) {
-        this.speed = speed;
-    }
-
-    public int getWidth() {
-        return width;
-    }
-
-    public void setWidth(final int width) {
-        this.width = width;
-    }
-
-    public int getHeight() {
-        return height;
-    }
-
-    public void setHeight(final int height) {
-        this.height = height;
-    }
 }

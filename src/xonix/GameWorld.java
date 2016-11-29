@@ -9,7 +9,10 @@ import java.util.ArrayList;
 import java.util.Random;
 
 
-public class GameWorld {
+/**
+ * Class containing the world, including timetickets, car and monsterballs
+ */
+class GameWorld {
 
     static final int SQUARE_LENGTH = 102;
     static final int SQUARE_UNITS = 5;
@@ -62,14 +65,37 @@ public class GameWorld {
         this.play();
     }
 
+    /**
+     * @return Size of the gameworld in pixels
+     */
+    public int getSize() {
+        float squareSize = fieldSquares.elementAt(0, 0).getSize();
+        int numSquares = SQUARE_LENGTH;
+        return (int) (numSquares * squareSize);
+    }
+
+    /**
+     * @param fieldSquares The object which contains all field squares
+     * @param position     The position from which you want the FieldSquare object
+     * @return A field square object at the given position
+     */
     static FieldSquare getSquareAtPosition(FieldSquares fieldSquares, Point2D.Float position) {
         return fieldSquares.elementAt((int) (position.x / GameWorld.SQUARE_UNITS + 0.5), (int) (position.y / GameWorld.SQUARE_UNITS + 0.5));
     }
 
+    /**
+     * @param fieldSquares The object which contains all field squares
+     * @param x            x value of the position from which you want the FieldSquare object
+     * @param y            y value of the position from which you want the FieldSquare object
+     * @return A field square object at the given position
+     */
     static FieldSquare getSquareAtPosition(FieldSquares fieldSquares, float x, float y) {
         return getSquareAtPosition(fieldSquares, new Point2D.Float(x, y));
     }
 
+    /**
+     * Creates monsterballs and adds them to the monsterBalls array
+     */
     private void createMonsterballs() {
         monsterBalls = new ArrayList<>();
         int number = random.nextInt(10) + 1;
@@ -80,22 +106,32 @@ public class GameWorld {
         }
     }
 
+    /**
+     * Creates timertickets and adds them to the timeTickets array
+     */
     private void createTimeTickets() {
         timeTickets = new ArrayList<>();
         int number = random.nextInt(SQUARE_UNITS) + 1;
         for (int i = 0; i < number; i++) {
-            Point2D.Float location=new Point2D.Float(random.nextInt(SQUARE_LENGTH * SQUARE_UNITS - 30) + 15, random.nextInt(SQUARE_LENGTH * SQUARE_UNITS - 30) + 15);
+            Point2D.Float location = new Point2D.Float(random.nextInt(SQUARE_LENGTH * SQUARE_UNITS - 30) + 15, random.nextInt(SQUARE_LENGTH * SQUARE_UNITS - 30) + 15);
             int ticketSize = 7;
             TimeTicket ticket = new TimeTicket(location, TICKET_COLOR, TIME_START, ticketSize, ticketSize);
             timeTickets.add(ticket);
         }
     }
 
+    /**
+     * Starts gameloop, calling update every tick
+     */
     private void play() {
         gameView.score.update();
         new Timer(GAME_TICK_DELAY, evt -> update((float) (GAME_TICK_DELAY / 1000.0))).start();
     }
 
+    /**
+     * Updates view and state with proper information
+     * @param delta Delta time since previous frame
+     */
     private void update(float delta) {
         if (!state.isGameOver()) {
             state.addClock(-delta);
@@ -117,6 +153,9 @@ public class GameWorld {
         gameView.update();
     }
 
+    /**
+     * Resets fieldSquares, monsterBalls, timeTickets, car and state
+     */
     private void reset() {
         this.fieldSquares.reset();
         createMonsterballs();
@@ -125,6 +164,10 @@ public class GameWorld {
         this.state.reset();
     }
 
+    /**
+     * Handles key events
+     * @param keycode code of pressed key
+     */
     private void execute(int keycode) {
         switch (keycode) {
             case KeyEvent.VK_LEFT:

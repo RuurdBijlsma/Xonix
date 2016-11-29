@@ -8,37 +8,58 @@ import java.util.Stack;
 
 class FieldSquares {
 
-    private final FieldSquare[][] fsss;
+    private final FieldSquare[][] fieldSquares;
     private final Color[][] colors;
 
     FieldSquares() {
-        fsss = new FieldSquare[GameWorld.SQUARE_LENGTH][GameWorld.SQUARE_LENGTH];
+        fieldSquares = new FieldSquare[GameWorld.SQUARE_LENGTH][GameWorld.SQUARE_LENGTH];
         setFields(GameWorld.PLAYER_COLOR, GameWorld.SQUARE_COLOR);
         colors = new Color[GameWorld.SQUARE_LENGTH][GameWorld.SQUARE_LENGTH];
     }
 
-    FieldSquare elementAt(int i, int j) {
-        return fsss[i][j];
+    /**
+     * Select a FieldSquare at a given position
+     * @param x X position of requested element
+     * @param y Y position of requested element
+     * @return FieldSquare at given position
+     */
+    FieldSquare elementAt(int x, int y) {
+        return fieldSquares[x][y];
     }
 
+    /**
+     * Resets fieldSquares
+     */
     void reset() {
         setFields(GameWorld.PLAYER_COLOR, GameWorld.SQUARE_COLOR);
     }
 
+    /**
+     * @param edge Color of the walls
+     * @param inner Color of the playing field
+     */
     private void setFields(Color edge, Color inner) {
         for (int y = 0; y < GameWorld.SQUARE_LENGTH; y++)
             for (int x = 0; x < GameWorld.SQUARE_LENGTH; x++)
                 if (x == 0 || y == 0 || x == GameWorld.SQUARE_LENGTH - 1 || y == GameWorld.SQUARE_LENGTH - 1)
-                    fsss[x][y] = new FieldSquare(new Point2D.Float(x * GameWorld.SQUARE_UNITS, y * GameWorld.SQUARE_UNITS), edge, GameWorld.SQUARE_UNITS);
+                    fieldSquares[x][y] = new FieldSquare(new Point2D.Float(x * GameWorld.SQUARE_UNITS, y * GameWorld.SQUARE_UNITS), edge, GameWorld.SQUARE_UNITS);
                 else
-                    fsss[x][y] = new FieldSquare(new Point2D.Float(x * GameWorld.SQUARE_UNITS, y * GameWorld.SQUARE_UNITS), inner, GameWorld.SQUARE_UNITS);
+                    fieldSquares[x][y] = new FieldSquare(new Point2D.Float(x * GameWorld.SQUARE_UNITS, y * GameWorld.SQUARE_UNITS), inner, GameWorld.SQUARE_UNITS);
     }
 
+    /**
+     * Changes color of the area that has been selected by the player
+     * @return Amount of squares that have been converted to cyan
+     */
     int fillSquares() {
         copyColors();
         return lineToPlayerColor() + fillAreas();
     }
 
+    /**
+     * Changes dark red player line to cyan line
+     * @return Amount of squares that have been converted to cyan
+     */
     private int lineToPlayerColor() {
         int count = 0;
         for (int x = 1; x < GameWorld.SQUARE_LENGTH - 1; x++)
@@ -50,12 +71,20 @@ class FieldSquares {
         return count;
     }
 
+    /**
+     * Copies all fieldSquare colors to colors array
+     */
     private void copyColors() {
         for (int i = 0; i < GameWorld.SQUARE_LENGTH; i++)
             for (int j = 0; j < GameWorld.SQUARE_LENGTH; j++)
-                colors[i][j] = fsss[i][j].getColor();
+                colors[i][j] = fieldSquares[i][j].getColor();
     }
 
+    /**
+     * Fills all areas except for the largest one.
+     * Used for filling smaller half of field after player creates division
+     * @return Size of filled area(s)
+     */
     private int fillAreas() {
         class Point3D {
             private int x, y, z;
@@ -83,12 +112,17 @@ class FieldSquares {
 
         int size = 0;
         for (Point3D area : areas) {
-            floodfill(area.x, area.y);
+            floorFill(area.x, area.y);
             size += area.z;
         }
         return size;
     }
 
+    /**
+     * @param x Position x of area
+     * @param y Position y of area
+     * @return Size of area
+     */
     private int areaSize(int x, int y) {
         int size = 0;
 
@@ -121,13 +155,18 @@ class FieldSquares {
         return size;
     }
 
-    private void floodfill(int x, int y) {
+    /**
+     * Flood fills cyan from a given position
+     * @param x Starting location x
+     * @param y Starting location y
+     */
+    private void floorFill(int x, int y) {
         if (elementAt(x, y).getColor() == GameWorld.PLAYER_COLOR)
             return;
         elementAt(x, y).setColor(GameWorld.PLAYER_COLOR);
-        floodfill(x, y - 1);
-        floodfill(x + 1, y);
-        floodfill(x, y + 1);
-        floodfill(x - 1, y);
+        floorFill(x, y - 1);
+        floorFill(x + 1, y);
+        floorFill(x, y + 1);
+        floorFill(x - 1, y);
     }
 }
