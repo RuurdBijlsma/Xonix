@@ -9,7 +9,7 @@ import java.util.Random;
 /**
  * Class containing the world, including timetickets, car and monsterballs
  */
-class GameWorld {
+public class GameWorld {
     private static GameWorld instance = null;
 
     public static GameWorld getInstance() {
@@ -21,7 +21,7 @@ class GameWorld {
 
     static final int SQUARE_LENGTH = 102;
     static final int SQUARE_UNITS = 5;
-    static final int GAME_TICK_DELAY = 40;
+    public static final int GAME_TICK_DELAY = 40;
     //    static final Color NO_COLOR = Color.white;
     static final Color CAR_COLOR = Color.red;
     static final Color SQUARE_COLOR = Color.black;
@@ -33,7 +33,7 @@ class GameWorld {
     static final int TIME_START = 55 - LEVEL_START;
 
     final FieldSquares fieldSquares;
-    final Car car;
+    public final Car car;
     private final Random random;
     ArrayList<MonsterBall> monsterBalls;
     ArrayList<TimeTicket> timeTickets;
@@ -105,7 +105,7 @@ class GameWorld {
      * Updates view and state with proper information
      * @param delta Delta time since previous frame
      */
-    void update(float delta) {
+    public void update(float delta) {
         if (!state.isGameOver()) {
             state.addClock(-delta);
             for (MonsterBall monsterBall : monsterBalls)

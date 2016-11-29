@@ -3,11 +3,13 @@ package xonix;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.util.Observable;
+import java.util.Observer;
 
 /**
  * Main UI frame
  */
-class GameView extends JFrame {
+public class GameView extends JFrame{
     private static GameView instance = null;
 
     public static GameView getInstance() {
@@ -16,6 +18,12 @@ class GameView extends JFrame {
         }
         return instance;
     }
+
+//    @Override
+//    public void update(Observable o, Object arg) {
+//
+//    }
+
     /**
      * Panel containing score information
      */
@@ -191,7 +199,7 @@ class GameView extends JFrame {
     /**
      * Update score and map
      */
-    void update() {
+    public void updateAll() {
         score.update();
         map.update();
     }

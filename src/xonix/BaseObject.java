@@ -6,7 +6,7 @@ import java.awt.geom.Point2D;
 /**
  * Abstract class to extend in order to get basic game functionality
  */
-abstract class BaseObject implements IMovable, ISteerable, IColorable {
+public abstract class BaseObject implements IMovable, ISteerable, IColorable {
     Point2D.Float loc;
     Color color;
     int heading;
@@ -16,12 +16,15 @@ abstract class BaseObject implements IMovable, ISteerable, IColorable {
 
     /**
      * Checks if the given location is within the object bounds
+     *
      * @param that Location to check
      * @return Whether this object contains the given location
      */
     boolean contains(final Point2D.Float that) {
-        Point2D.Float thisLoc = this.getLocation();
-        return that.x >= thisLoc.x && that.x <= thisLoc.x + this.getWidth() && that.y >= thisLoc.y && that.y <= thisLoc.y + this.getHeight();
+        Point2D.Float centerLocation = new Point2D.Float(this.getLocation().x + this.getWidth() / 2, this.getLocation().y + this.getHeight() / 2);
+
+        int margin = 10;
+        return centerLocation.distance(that) < this.getWidth() / 2 + margin;
     }
 
     @Override

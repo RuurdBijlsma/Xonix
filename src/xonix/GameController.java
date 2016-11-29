@@ -1,8 +1,10 @@
 package xonix;
 
+import xonix.Commands.Tick;
+
 import javax.swing.*;
 
-class GameController {
+public class GameController {
     private static GameController instance = null;
 
     public static GameController getInstance() {
@@ -12,8 +14,8 @@ class GameController {
         return instance;
     }
 
-    private GameView view;
-    private GameWorld model;
+    public GameView view;
+    public GameWorld model;
 
     private GameController() {
         view = GameView.getInstance();
@@ -21,18 +23,17 @@ class GameController {
 
         view.setWorld(model);
 
-        new UserController(view, model);
-
         play();
     }
 
+    void setUserController(){
+        new UserController();
+    }
+
     /**
-     * Starts gameloop, calling update every tick
+     * Starts game loop, calling update every tick
      */
     private void play() {
-        new Timer(GameWorld.GAME_TICK_DELAY, evt -> {
-            model.update((float) (GameWorld.GAME_TICK_DELAY / 1000.0));
-            view.update();
-        }).start();
+        new Timer(GameWorld.GAME_TICK_DELAY, Tick.getInstance()).start();
     }
 }

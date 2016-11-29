@@ -6,13 +6,10 @@ import java.awt.geom.Point2D;
 import java.util.Random;
 
 class UserController {
-    private GameWorld model;
     private Random random = new Random();
 
-    UserController(GameView view, GameWorld model) {
-        this.model = model;
-
-        view.addKeyListener(new KeyListener() {
+    UserController() {
+        Application.controller.view.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {
             }
@@ -34,6 +31,7 @@ class UserController {
      * @param keycode code of pressed key
      */
     private void execute(int keycode) {
+        GameWorld model = Application.controller.model;
         switch (keycode) {
             case KeyEvent.VK_LEFT:
                 model.car.setHeading(180);
