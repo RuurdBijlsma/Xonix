@@ -28,9 +28,9 @@ public class GameWorld {
     public static final int GAME_TICK_DELAY = 40;
     //    static final Color NO_COLOR = Color.white;
     static final Color CAR_COLOR = Color.red;
-    static final Color SQUARE_COLOR = Color.black;
-    static final Color LINE_COLOR = Color.red.darker().darker();
-    static final Color PLAYER_COLOR = Color.cyan;
+    public static final Color SQUARE_COLOR = Color.black;
+    public static final Color LINE_COLOR = Color.red.darker().darker();
+    public static final Color PLAYER_COLOR = Color.cyan;
     public static final Color MONSTER_COLOR = Color.orange;
     public static final Color TICKET_COLOR = Color.green;
     private static final int LEVEL_START = 1;

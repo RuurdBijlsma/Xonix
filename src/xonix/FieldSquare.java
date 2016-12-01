@@ -3,7 +3,7 @@ package xonix;
 import java.awt.Color;
 import java.awt.geom.Point2D;
 
-class FieldSquare extends BaseObject{
+public class FieldSquare extends BaseObject{
     private float size;
 
     FieldSquare(final Point2D.Float loc, final Color color, float size) {
