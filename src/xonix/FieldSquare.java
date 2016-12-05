@@ -1,6 +1,6 @@
 package xonix;
 
-import java.awt.Color;
+import java.awt.*;
 import java.awt.geom.Point2D;
 
 public class FieldSquare extends BaseObject{

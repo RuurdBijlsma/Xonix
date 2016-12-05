@@ -1,6 +1,8 @@
 package xonix.Commands;
+
 import xonix.Application;
 import xonix.GameWorld;
+
 import java.awt.event.ActionEvent;
 
 public class Tick extends Command {

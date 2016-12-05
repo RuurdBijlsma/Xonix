@@ -1,13 +1,13 @@
 package xonix;
 
-import xonix.Commands.*;
+import xonix.Commands.AboutGame;
+import xonix.Commands.AddMonsterBall;
+import xonix.Commands.AddTimeTicket;
+import xonix.Commands.QuitGame;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.util.Observable;
-import java.util.Observer;
 
 /**
  * Main UI frame

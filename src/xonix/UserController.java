@@ -5,7 +5,6 @@ import xonix.Commands.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.geom.Point2D;
 import java.util.Random;
 
 class UserController {

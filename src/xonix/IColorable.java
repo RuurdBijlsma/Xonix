@@ -1,6 +1,6 @@
 package xonix;
 
-import java.awt.Color;
+import java.awt.*;
 
 /**
  * Interface for any colorable objects
