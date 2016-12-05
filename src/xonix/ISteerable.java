@@ -5,7 +5,10 @@ package xonix;
  */
 interface ISteerable {
     int getHeading();
+
     void setHeading(int heading);
+
     float getSpeed();
+
     void setSpeed(float speed);
 }

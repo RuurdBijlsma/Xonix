@@ -10,6 +10,7 @@ public class FieldSquares {
     private static FieldSquares instance = null;
     public final Color[][] colors;
     private final FieldSquare[][] fieldSquares;
+
     private FieldSquares() {
         fieldSquares = new FieldSquare[GameWorld.SQUARE_LENGTH][GameWorld.SQUARE_LENGTH];
         setFields(GameWorld.PLAYER_COLOR, GameWorld.SQUARE_COLOR);

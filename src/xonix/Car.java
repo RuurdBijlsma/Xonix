@@ -3,15 +3,15 @@ package xonix;
 import java.awt.*;
 import java.awt.geom.Point2D;
 
-public class Car extends GameObject{
+public class Car extends GameObject {
 
     /**
-     * @param loc Location of the car
-     * @param color Color of the car
+     * @param loc     Location of the car
+     * @param color   Color of the car
      * @param heading Heading of the car (degrees)
-     * @param speed Speed of the car
-     * @param width Width of the car
-     * @param height Height of the car
+     * @param speed   Speed of the car
+     * @param width   Width of the car
+     * @param height  Height of the car
      */
     Car(final Point2D.Float loc, final Color color, final int heading, final int speed, final int width, final int height) {
         setLocation(loc);
@@ -36,13 +36,14 @@ public class Car extends GameObject{
 
     /**
      * Checks for collisions with the walls
+     *
      * @param fieldSquares The object which contains all field squares
-     * @param prevPos Previous position of the car
-     * @param nextPos Next position of the car
-     * @param state Game state
+     * @param prevPos      Previous position of the car
+     * @param nextPos      Next position of the car
+     * @param state        Game state
      */
     @Override
-    boolean checkCollisions(FieldSquares fieldSquares, Point2D.Float prevPos,  Point2D.Float nextPos, State state){
+    boolean checkCollisions(FieldSquares fieldSquares, Point2D.Float prevPos, Point2D.Float nextPos, State state) {
         FieldSquare prevSquare = GameWorld.getSquareAtPosition(fieldSquares, prevPos);
         FieldSquare nextSquare = GameWorld.getSquareAtPosition(fieldSquares, nextPos);
         if (nextSquare.getColor() == GameWorld.SQUARE_COLOR)

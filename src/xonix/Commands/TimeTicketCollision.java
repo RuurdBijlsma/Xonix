@@ -5,7 +5,7 @@ import xonix.TimeTicket;
 
 import java.awt.event.ActionEvent;
 
-public class TimeTicketCollision extends Command{
+public class TimeTicketCollision extends Command {
     @Override
     public void actionPerformed(ActionEvent e) {
         GameWorld model = (GameWorld) e.getSource();

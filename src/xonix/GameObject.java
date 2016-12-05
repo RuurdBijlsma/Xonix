@@ -8,6 +8,7 @@ import java.awt.geom.Point2D;
 public abstract class GameObject extends BaseObject {
     /**
      * Calculates an objects next position based on heading, speed and location
+     *
      * @param delta Time since last update
      * @return Next location for the gameobject to move to
      */
@@ -28,8 +29,8 @@ public abstract class GameObject extends BaseObject {
 
     /**
      * @param fieldSquares The object which contains all field squares
-     * @param delta Time since last update
-     * @param state Game state
+     * @param delta        Time since last update
+     * @param state        Game state
      * @return True if collision is detected
      */
     public boolean changeLocation(FieldSquares fieldSquares, float delta, State state) {
@@ -45,10 +46,11 @@ public abstract class GameObject extends BaseObject {
 
     /**
      * Method that should be implemented in class that extends this
+     *
      * @param fieldSquares The object which contains all field squares
-     * @param prevPos Previous position
-     * @param nextPos Next position
-     * @param state Game state
+     * @param prevPos      Previous position
+     * @param nextPos      Next position
+     * @param state        Game state
      * @return True if collision is detected
      */
     abstract boolean checkCollisions(FieldSquares fieldSquares, Point2D.Float prevPos, Point2D.Float nextPos, State state);

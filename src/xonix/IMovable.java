@@ -8,9 +8,14 @@ import java.awt.geom.Point2D;
  */
 public interface IMovable {
     int getWidth();
-    int getHeight();
+
     void setWidth(int width);
+
+    int getHeight();
+
     void setHeight(int height);
-    void setLocation(Point2D.Float loc);
+
     Point2D getLocation();
+
+    void setLocation(Point2D.Float loc);
 }

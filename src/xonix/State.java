@@ -1,18 +1,14 @@
 package xonix;
 
+import xonix.Commands.NextLevel;
+
+import java.awt.event.ActionEvent;
+
 /**
  * Contains state of the game
  */
 public class State {
     private static State instance = null;
-
-    public static State getInstance() {
-        if (instance == null) {
-            instance = new State();
-        }
-        return instance;
-    }
-
     private int level;
     private float clock;
     private int lives;
@@ -24,6 +20,13 @@ public class State {
         this.reset();
     }
 
+    public static State getInstance() {
+        if (instance == null) {
+            instance = new State();
+        }
+        return instance;
+    }
+
     /**
      * Resets state
      */
@@ -31,15 +34,16 @@ public class State {
         setLevel(1);
     }
 
-    int getLevel() {
+    public int getLevel() {
         return level;
     }
 
     /**
      * Set the level, a higher leven means higher required score and less given time
+     *
      * @param level level that has been reached
      */
-    private void setLevel(int level) {
+    public void setLevel(int level) {
         this.level = level;
         this.clock = (20 - level) * 2;
         this.lives = 3;
@@ -84,8 +88,10 @@ public class State {
 
     private void setCurrentScore(int cscore) {
         this.currentScore = cscore;
-        if (cscore > requiredScore)
-            setLevel(level + 1);
+        if (cscore > requiredScore) {
+            NextLevel nextLevel = new NextLevel();
+            nextLevel.actionPerformed(new ActionEvent(this, 0, "NextLevel"));
+        }
     }
 
     void addCurrentScore(int currentScore) {

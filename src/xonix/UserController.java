@@ -5,11 +5,8 @@ import xonix.Commands.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.Random;
 
 class UserController {
-    private Random random = new Random();
-
     UserController() {
         Application.controller.view.addKeyListener(new KeyListener() {
             @Override
@@ -74,6 +71,10 @@ class UserController {
             case KeyEvent.VK_Q:
                 QuitGame quitGame = new QuitGame();
                 quitGame.actionPerformed(new ActionEvent(this, 0, "QuitGame"));
+                break;
+            case KeyEvent.VK_R:
+                ResetGame resetGame = new ResetGame();
+                resetGame.actionPerformed(new ActionEvent(this, 0, "ResetGame"));
                 break;
         }
     }

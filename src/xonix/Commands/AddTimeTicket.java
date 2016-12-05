@@ -8,7 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.geom.Point2D;
 import java.util.Random;
 
-public class AddTimeTicket extends Command{
+public class AddTimeTicket extends Command {
     @Override
     public void actionPerformed(ActionEvent e) {
         Random random = new Random();

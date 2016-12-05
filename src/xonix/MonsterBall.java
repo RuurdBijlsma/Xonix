@@ -3,15 +3,15 @@ package xonix;
 import java.awt.*;
 import java.awt.geom.Point2D;
 
-public class MonsterBall extends GameObject{
+public class MonsterBall extends GameObject {
     private float radius;
 
     /**
-     * @param loc Location of the monsterball
-     * @param color Color of the monsterball
+     * @param loc     Location of the monsterball
+     * @param color   Color of the monsterball
      * @param heading Heading of the monsterball (degrees)
-     * @param speed Speed of the monsterball
-     * @param radius Radius of the monsterball
+     * @param speed   Speed of the monsterball
+     * @param radius  Radius of the monsterball
      */
     public MonsterBall(final Point2D.Float loc, final Color color, final int heading, final float speed, final float radius) {
         setLocation(loc);
@@ -37,7 +37,7 @@ public class MonsterBall extends GameObject{
      * @return True if collision with player line happens
      */
     @Override
-    boolean checkCollisions(FieldSquares fieldSquares, Point2D.Float prevPos,  Point2D.Float nextPos, State state){
+    boolean checkCollisions(FieldSquares fieldSquares, Point2D.Float prevPos, Point2D.Float nextPos, State state) {
         FieldSquare prevSquare = GameWorld.getSquareAtPosition(fieldSquares, prevPos);
         FieldSquare nextSquare = GameWorld.getSquareAtPosition(fieldSquares, nextPos);
 

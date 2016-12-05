@@ -5,7 +5,7 @@ import xonix.Car;
 
 import java.awt.event.ActionEvent;
 
-public class IncreaseSpeed extends Command{
+public class IncreaseSpeed extends Command {
     @Override
     public void actionPerformed(ActionEvent e) {
         Car car = Application.controller.model.car;

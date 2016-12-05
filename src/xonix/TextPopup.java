@@ -11,6 +11,7 @@ public class TextPopup {
 
     /**
      * Create a popup on the screen.
+     *
      * @param text The text to show on the popup.
      */
     public TextPopup(String title, String text) {

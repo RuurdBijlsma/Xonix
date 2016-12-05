@@ -1,10 +1,12 @@
 package xonix.Commands;
 
+import xonix.Application;
+
 import java.awt.event.ActionEvent;
 
-public class QuitGame extends Command {
+public class ResetGame extends Command {
     @Override
     public void actionPerformed(ActionEvent e) {
-        System.exit(0);
+        Application.controller.model.reset();
     }
 }
