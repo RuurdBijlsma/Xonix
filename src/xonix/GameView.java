@@ -1,7 +1,6 @@
 package xonix;
 
-import xonix.Commands.AboutGame;
-import xonix.Commands.AddSquareGroup;
+import xonix.Commands.*;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -138,7 +137,7 @@ public class GameView extends JFrame{
         this.add(all);
         this.setMenu();
         this.pack();
-        this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setSize(new Dimension(516, 650));
         this.setLocationRelativeTo(null);
         this.setResizable(false);
@@ -178,17 +177,20 @@ public class GameView extends JFrame{
         menuItem = new JMenuItem("Sound");
         menu.add(menuItem);
         menuItem = new JMenuItem("About");
-        menuItem.setAction(new AboutGame());
+        menuItem.addActionListener(new AboutGame());
         menu.add(menuItem);
         menuItem = new JMenuItem("Quit");
+        menuItem.addActionListener(new QuitGame());
         menu.add(menuItem);
         menuBar.add(menu);
         menu = new JMenu("Command");
         menuItem = new JMenuItem("Add bomb");
+        menuItem.addActionListener(new AddMonsterBall());
         menu.add(menuItem);
         menuItem = new JMenuItem("Add smartbomb");
         menu.add(menuItem);
         menuItem = new JMenuItem("Add timeticket");
+        menuItem.addActionListener(new AddTimeTicket());
         menu.add(menuItem);
         menuItem = new JMenuItem("Switch bombstrategies ");
         menu.add(menuItem);

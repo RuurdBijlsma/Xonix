@@ -9,6 +9,6 @@ public class IncreaseSpeed extends Command{
     @Override
     public void actionPerformed(ActionEvent e) {
         Car car = Application.controller.model.car;
-        car.setSpeed(car.getSpeed() - 5);
+        car.setSpeed(car.getSpeed() + 5);
     }
 }
