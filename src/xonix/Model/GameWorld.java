@@ -80,6 +80,8 @@ public class GameWorld extends Observable {
     public void fillField() {
         createMonsterBalls();
         createTimeTickets();
+        setChanged();
+        notifyObservers();
     }
 
     /**
@@ -95,7 +97,6 @@ public class GameWorld extends Observable {
         for (int i = 0; i < number / 3; i++) {
             AddSmartMonsterBall smartAdder = new AddSmartMonsterBall();
             smartAdder.actionPerformed(null);
-            System.out.println("Adding smart balls");
         }
     }
 
@@ -136,6 +137,8 @@ public class GameWorld extends Observable {
 
             car.changeLocation(fieldSquares, delta, state);
         }
+        setChanged();
+        notifyObservers();
     }
 
     /**
@@ -146,5 +149,7 @@ public class GameWorld extends Observable {
         fillField();
         this.car.reset();
         this.state.reset();
+        setChanged();
+        notifyObservers();
     }
 }

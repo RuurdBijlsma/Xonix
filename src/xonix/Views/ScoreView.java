@@ -1,7 +1,7 @@
 package xonix.Views;
 
-import xonix.Application;
 import xonix.Model.GameWorld;
+import xonix.Model.State;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,7 +11,6 @@ public class ScoreView extends JPanel {
     final private JLabel time;
     final private JLabel lives;
     final private JLabel currentScore;
-    private GameWorld gameWorld;
 
     ScoreView() {
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -47,14 +46,11 @@ public class ScoreView extends JPanel {
     /**
      * Shows updated stats in the labels
      */
-    public void update() {
-        this.level.setText("Level: " + Application.controller.model.state.getLevel());
-        this.time.setText("Time:  " + (int) gameWorld.state.getClock());
-        this.lives.setText("Lives: " + gameWorld.state.getLives());
-        this.currentScore.setText("Score: " + gameWorld.state.getCurrentScore() + " / " + gameWorld.state.getRequiredScore());
-    }
-
-    void setWorld(GameWorld gameWorld) {
-        this.gameWorld = gameWorld;
+    public void update(GameWorld world) {
+        State state = world.state;
+        this.level.setText("Level: " + state.getLevel());
+        this.time.setText("Time:  " + (int) state.getClock());
+        this.lives.setText("Lives: " + state.getLives());
+        this.currentScore.setText("Score: " + state.getCurrentScore() + " / " + state.getRequiredScore());
     }
 }

@@ -1,5 +1,6 @@
-package xonix;
+package xonix.Controller;
 
+import xonix.Application;
 import xonix.Commands.*;
 import xonix.Views.GameView;
 

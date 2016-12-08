@@ -1,5 +1,7 @@
 package xonix;
 
+import xonix.Controller.GameController;
+
 /**
  * Main class
  */

@@ -1,4 +1,6 @@
-package xonix;
+package xonix.Views;
+
+import xonix.Application;
 
 import javax.swing.*;
 import java.awt.*;

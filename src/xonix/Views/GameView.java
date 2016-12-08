@@ -55,7 +55,15 @@ public class GameView extends JFrame implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
+        update((GameWorld)o);
+    }
 
+    /**
+     * Update score and map
+     */
+    public void update(GameWorld world) {
+        score.update(world);
+        map.update(world);
     }
 
     /**
@@ -70,12 +78,6 @@ public class GameView extends JFrame implements Observer {
         menuItem = new JMenuItem("New");
         menuItem.addActionListener(new NewGame());
         menu.add(menuItem);
-//        menuItem = new JMenuItem("Save");
-//        menu.add(menuItem);
-//        menuItem = new JMenuItem("Undo");
-//        menu.add(menuItem);
-//        menuItem = new JMenuItem("Sound");
-//        menu.add(menuItem);
         menuItem = new JMenuItem("About");
         menuItem.addActionListener(new AboutGame());
         menu.add(menuItem);
@@ -98,18 +100,5 @@ public class GameView extends JFrame implements Observer {
         menu.add(menuItem);
         menuBar.add(menu);
         this.setJMenuBar(menuBar);
-    }
-
-    public void setWorld(GameWorld gameWorld) {
-        map.setWorld(gameWorld);
-        score.setWorld(gameWorld);
-    }
-
-    /**
-     * Update score and map
-     */
-    public void updateAll() {
-        score.update();
-        map.update();
     }
 }

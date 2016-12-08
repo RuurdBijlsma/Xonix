@@ -1,6 +1,6 @@
 package xonix.Commands;
 
-import xonix.TextPopup;
+import xonix.Views.TextPopup;
 
 import java.awt.event.ActionEvent;
 

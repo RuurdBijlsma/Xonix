@@ -18,6 +18,5 @@ public class Tick extends Command {
     @Override
     public void actionPerformed(ActionEvent e) {
         Application.controller.model.update((float) (GameWorld.GAME_TICK_DELAY / 1000.0));
-        Application.controller.view.updateAll();
     }
 }

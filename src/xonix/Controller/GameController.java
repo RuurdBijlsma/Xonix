@@ -1,4 +1,4 @@
-package xonix;
+package xonix.Controller;
 
 import xonix.Model.GameWorld;
 import xonix.Views.GameView;
@@ -10,8 +10,7 @@ public class GameController {
     private GameController() {
         view = GameView.getInstance();
         model = GameWorld.getInstance();
-
-        view.setWorld(model);
+        model.addObserver(view);
 
         model.play();
     }
@@ -23,7 +22,7 @@ public class GameController {
         return instance;
     }
 
-    void initialize() {
+    public void initialize() {
         new UserController();
         model.fillField();
     }
