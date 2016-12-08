@@ -2,13 +2,17 @@ package xonix.Controller;
 
 import xonix.Model.GameWorld;
 import xonix.Views.GameView;
+import xonix.Views.MapView;
+import xonix.Views.ScoreView;
 
 public class GameController {
     private static GameController instance = null;
     public GameView view;
     public GameWorld model;
     private GameController() {
-        view = GameView.getInstance();
+        ScoreView scoreView = new ScoreView();
+        MapView mapView = new MapView();
+        view = new GameView(scoreView, mapView);
         model = GameWorld.getInstance();
         model.addObserver(view);
 

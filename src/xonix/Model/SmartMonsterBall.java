@@ -1,6 +1,8 @@
 package xonix.Model;
 
 import xonix.Application;
+import xonix.Model.Strategies.FollowStrategy;
+import xonix.Model.Strategies.MonsterStrategy;
 
 import java.awt.*;
 import java.awt.geom.Point2D;
@@ -15,23 +17,19 @@ public class SmartMonsterBall extends MonsterBall {
      * @param speed   Speed of the monsterball
      * @param radius  Radius of the monsterball
      */
-    private Strategy strategy = Strategy.BOUNCE;
+    private MonsterStrategy strategy;
 
-    public SmartMonsterBall(Point2D.Float loc, Color color, int heading, float speed, float radius, Strategy strat) {
+    public SmartMonsterBall(Point2D.Float loc, Color color, int heading, float speed, float radius, MonsterStrategy strat) {
         super(loc, color, heading, speed, radius);
         strategy = strat;
     }
 
-    public Strategy getStrategy() {
+    public MonsterStrategy getStrategy() {
         return strategy;
     }
 
-    public void setStrategy(Strategy strat) {
-        setColor(strat == Strategy.FOLLOW ? GameWorld.SMART_MONSTER_COLOR : GameWorld.MONSTER_COLOR);
-        setRadius(strat == Strategy.FOLLOW ? GameWorld.SMART_MONSTER_RADIUS : GameWorld.MONSTER_RADIUS);
-        if(strat == Strategy.BOUNCE){
-            setHeading(new Random().nextInt(360));
-        }
+    public void setStrategy(MonsterStrategy strat) {
+        strat.initialize(this);
         strategy = strat;
     }
 
@@ -43,17 +41,7 @@ public class SmartMonsterBall extends MonsterBall {
      */
     @Override
     public boolean changeLocation(FieldSquares fieldSquares, float delta, RealState state) {
-        if (strategy == Strategy.FOLLOW) {
-
-            Point2D.Float carLocation = Application.controller.model.car.getLocation(),
-                    locationDelta = new Point2D.Float(
-                            carLocation.x - getLocation().x,
-                            carLocation.y - getLocation().y
-                    );
-            double heading = Math.atan2(locationDelta.y, locationDelta.x);
-            int head = 360 - (int) Math.toDegrees(heading);
-            setHeading(head);
-        }
+        strategy.changeLocation(this);
 
         return super.changeLocation(fieldSquares, delta, state);
     }

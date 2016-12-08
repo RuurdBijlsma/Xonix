@@ -13,11 +13,10 @@ import java.util.Observer;
  * Main UI frame
  */
 public class GameView extends JFrame implements Observer {
-    private static GameView instance = null;
-    public final ScoreView score;
+    private final ScoreView score;
     public final MapView map;
 
-    private GameView() {
+    public GameView(ScoreView scoreView, MapView mapView) {
         this.setTitle("Xonix Game");
         JPanel all = new JPanel();
 
@@ -30,10 +29,10 @@ public class GameView extends JFrame implements Observer {
         this.setResizable(false);
         this.setVisible(true);
 
-        map = new MapView();
-        all.add(map);
+        score = scoreView;
+        map = mapView;
 
-        score = new ScoreView();
+        all.add(map);
         all.add(score);
 
         all.setBackground(Color.cyan);
@@ -46,16 +45,9 @@ public class GameView extends JFrame implements Observer {
         map.setAlignmentX(CENTER_ALIGNMENT);
     }
 
-    public static GameView getInstance() {
-        if (instance == null) {
-            instance = new GameView();
-        }
-        return instance;
-    }
-
     @Override
     public void update(Observable o, Object arg) {
-        update((GameWorld)o);
+        update((GameWorld) o);
     }
 
     /**

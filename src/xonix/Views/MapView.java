@@ -30,12 +30,10 @@ public class MapView extends JPanel {
             G2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
             G2D.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 
-            for (int x = 0; x < GameWorld.SQUARE_LENGTH; x++)
-                for (int y = 0; y < GameWorld.SQUARE_LENGTH; y++) {
-                    FieldSquare fieldSquare = model.fieldSquares.elementAt(x, y);
-                    G2D.setColor(fieldSquare.getColor());
-                    G2D.fillRect((int) fieldSquare.getLocation().x, (int) fieldSquare.getLocation().y, (int) fieldSquare.getSize(), (int) fieldSquare.getSize());
-                }
+            for (FieldSquare fieldSquare : model.fieldSquares) {
+                G2D.setColor(fieldSquare.getColor());
+                G2D.fillRect((int) fieldSquare.getLocation().x, (int) fieldSquare.getLocation().y, (int) fieldSquare.getSize(), (int) fieldSquare.getSize());
+            }
 
             if (model.state.isGameOver()) {
                 Font font = new Font("Consolas", Font.BOLD, 50);

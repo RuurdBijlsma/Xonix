@@ -5,11 +5,15 @@ import xonix.Commands.AddSquareGroup;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.geom.Point2D;
+import java.util.Iterator;
 
-public class FieldSquares {
+public class FieldSquares implements Iterable<FieldSquare> {
     private static FieldSquares instance = null;
     public final Color[][] colors;
     private final FieldSquare[][] fieldSquares;
+    private int iteratorColumnIndex = 0;
+    private int iteratorRowIndex = 0;
+
 
     private FieldSquares() {
         fieldSquares = new FieldSquare[GameWorld.SQUARE_LENGTH][GameWorld.SQUARE_LENGTH];
@@ -75,5 +79,29 @@ public class FieldSquares {
         return addSquareGroup.filledSize;
     }
 
+    @Override
+    public Iterator<FieldSquare> iterator() {
+        return new Iterator<FieldSquare>() {
+            @Override
+            public boolean hasNext() {
+                boolean hasNextColumn = iteratorColumnIndex + 1 < GameWorld.SQUARE_LENGTH,
+                        hasNextRow = iteratorRowIndex + 1 < GameWorld.SQUARE_LENGTH;
+                if (!hasNextColumn && !hasNextRow) {
+                    iteratorColumnIndex = 0;
+                    iteratorRowIndex = 0;
+                    return false;
+                }
+                return true;
+            }
 
+            @Override
+            public FieldSquare next() {
+                if (++iteratorColumnIndex >= GameWorld.SQUARE_LENGTH) {
+                    iteratorColumnIndex = 0;
+                    iteratorRowIndex++;
+                }
+                return fieldSquares[iteratorColumnIndex][iteratorRowIndex];
+            }
+        };
+    }
 }

@@ -1,8 +1,6 @@
 package xonix.Views;
 
-import xonix.Model.GameWorld;
 import xonix.Model.ProxyState;
-import xonix.Model.RealState;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,7 +11,7 @@ public class ScoreView extends JPanel {
     final private JLabel lives;
     final private JLabel currentScore;
 
-    ScoreView() {
+    public ScoreView() {
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.setBorder(BorderFactory.createEmptyBorder(0, 10, 10, 10));
         level = new JLabel("");

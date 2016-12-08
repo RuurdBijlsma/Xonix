@@ -23,8 +23,10 @@ public class GameWorld extends Observable {
     public static final Color MONSTER_COLOR = Color.orange;
     public static final Color SMART_MONSTER_COLOR = Color.red;
     public static final Color TICKET_COLOR = Color.green;
-    static final int MONSTER_RADIUS = 6;
-    static final int SMART_MONSTER_RADIUS = 10;
+    public static final int MONSTER_RADIUS = 6;
+    public static final int SMART_MONSTER_RADIUS = 10;
+    public static final int SMART_MONSTER_MAXSPEED = 30;
+    public static final int MONSTER_MAXSPEED = 100;
     static final Color CAR_COLOR = Color.red;
     private static final int LEVEL_START = 1;
     public static final int TIME_START = 55 - LEVEL_START;

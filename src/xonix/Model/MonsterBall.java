@@ -25,7 +25,7 @@ public class MonsterBall extends GameObject {
         return radius;
     }
 
-    void setRadius(float radius) {
+    public void setRadius(float radius) {
         this.radius = radius;
     }
 
