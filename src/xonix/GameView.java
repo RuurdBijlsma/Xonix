@@ -101,8 +101,8 @@ public class GameView extends JFrame implements Observer {
         this.setJMenuBar(menuBar);
     }
 
-    void setWorld(GameWorld gw) {
-        this.gameWorld = gw;
+    void setWorld(GameWorld gameWorld) {
+        this.gameWorld = gameWorld;
     }
 
     /**
