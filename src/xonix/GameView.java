@@ -179,35 +179,38 @@ public class GameView extends JFrame implements Observer {
         @Override
         public void paint(Graphics g) {
             super.paint(g);
+            Graphics2D G2D = (Graphics2D) g;
+            G2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+            G2D.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 
             for (int x = 0; x < GameWorld.SQUARE_LENGTH; x++)
                 for (int y = 0; y < GameWorld.SQUARE_LENGTH; y++) {
                     FieldSquare fieldSquare = gameWorld.fieldSquares.elementAt(x, y);
-                    g.setColor(fieldSquare.getColor());
-                    g.fillRect((int) fieldSquare.getLocation().x, (int) fieldSquare.getLocation().y, (int) fieldSquare.getSize(), (int) fieldSquare.getSize());
+                    G2D.setColor(fieldSquare.getColor());
+                    G2D.fillRect((int) fieldSquare.getLocation().x, (int) fieldSquare.getLocation().y, (int) fieldSquare.getSize(), (int) fieldSquare.getSize());
                 }
 
             if (gameWorld.state.isGameOver()) {
                 Font font = new Font("Consolas", Font.BOLD, 25);
-                FontMetrics metrics = g.getFontMetrics(font);
-                g.setColor(Color.RED);
-                g.setFont(font);
-                g.drawString("GAME OVER", (GameWorld.SQUARE_LENGTH * GameWorld.SQUARE_UNITS - metrics.stringWidth("GAME OVER")) / 2, (GameWorld.SQUARE_LENGTH * GameWorld.SQUARE_UNITS - metrics.getHeight()) / 2);
+                FontMetrics metrics = G2D.getFontMetrics(font);
+                G2D.setColor(Color.RED);
+                G2D.setFont(font);
+                G2D.drawString("GAME OVER", (GameWorld.SQUARE_LENGTH * GameWorld.SQUARE_UNITS - metrics.stringWidth("GAME OVER")) / 2, (GameWorld.SQUARE_LENGTH * GameWorld.SQUARE_UNITS - metrics.getHeight()) / 2);
                 return;
             }
 
             for (MonsterBall monsterBall : gameWorld.monsterBalls) {
-                g.setColor(monsterBall.getColor());
-                g.fillArc((int) monsterBall.getLocation().x, (int) monsterBall.getLocation().y, (int) monsterBall.getRadius(), (int) monsterBall.getRadius(), 0, 360);
+                G2D.setColor(monsterBall.getColor());
+                G2D.fillArc((int) monsterBall.getLocation().x, (int) monsterBall.getLocation().y, (int) monsterBall.getRadius(), (int) monsterBall.getRadius(), 0, 360);
             }
 
             for (TimeTicket timeTicket : gameWorld.timeTickets) {
-                g.setColor(timeTicket.getColor());
-                g.fillRect((int) timeTicket.getLocation().x, (int) timeTicket.getLocation().y, timeTicket.getWidth(), timeTicket.getHeight());
+                G2D.setColor(timeTicket.getColor());
+                G2D.fillRect((int) timeTicket.getLocation().x, (int) timeTicket.getLocation().y, timeTicket.getWidth(), timeTicket.getHeight());
             }
 
-            g.setColor(gameWorld.car.getColor());
-            g.fillRect((int) gameWorld.car.getLocation().x, (int) gameWorld.car.getLocation().y, gameWorld.car.getWidth(), gameWorld.car.getHeight());
+            G2D.setColor(gameWorld.car.getColor());
+            G2D.fillRect((int) gameWorld.car.getLocation().x, (int) gameWorld.car.getLocation().y, gameWorld.car.getWidth(), gameWorld.car.getHeight());
         }
     }
 }

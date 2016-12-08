@@ -24,6 +24,7 @@ class UserController {
         addKey(KeyEvent.VK_UNDERSCORE, new DecreaseSpeed(), "Decrease Speed");
         addKey(KeyEvent.VK_T, new AddTimeTicket(), "Add TimeTicket");
         addKey(KeyEvent.VK_M, new AddMonsterBall(), "Add MonsterBall");
+        addKey(KeyEvent.VK_S, new AddSmartMonsterBall(), "Add Smart MonsterBall");
         addKey(KeyEvent.VK_Q, new QuitGame(), "Quit Game");
     }
 
