@@ -12,7 +12,7 @@ public abstract class GameObject extends BaseObject {
      * @param delta Time since last update
      * @return Next location for the gameobject to move to
      */
-    Point2D.Float nextLocation(float delta) {
+    private Point2D.Float nextLocation(float delta) {
         double radians = Math.toRadians(getHeading());
         float newx = (float) (getLocation().getX() + delta * getSpeed() * (float) Math.cos(radians)),
                 newy = (float) (getLocation().getY() - delta * getSpeed() * (float) Math.sin(radians));

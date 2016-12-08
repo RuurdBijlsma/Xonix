@@ -11,6 +11,6 @@ public class Application {
 
     public static void main(String[] args) {
         controller = GameController.getInstance();
-        controller.setUserController();
+        controller.initialize();
     }
 }

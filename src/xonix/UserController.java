@@ -2,80 +2,38 @@ package xonix;
 
 import xonix.Commands.*;
 
-import java.awt.event.ActionEvent;
+import javax.swing.*;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 
 class UserController {
+    private GameView view=Application.controller.view;
     UserController() {
-        Application.controller.view.addKeyListener(new KeyListener() {
-            @Override
-            public void keyTyped(KeyEvent e) {
-            }
-
-            @Override
-            public void keyPressed(KeyEvent e) {
-                execute(e.getKeyCode());
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-            }
-        });
+        setInputKeys();
     }
 
     /**
-     * Handles key events
-     *
-     * @param keycode code of pressed key
+     * Adds all input keys
      */
-    private void execute(int keycode) {
-        GameWorld model = Application.controller.model;
-        switch (keycode) {
-            case KeyEvent.VK_LEFT:
-                GoWest goWest = new GoWest();
-                goWest.actionPerformed(new ActionEvent(this, 0, "GoWest"));
-                break;
-            case KeyEvent.VK_UP:
-                GoNorth goNorth = new GoNorth();
-                goNorth.actionPerformed(new ActionEvent(this, 0, "GoNorth"));
-                break;
-            case KeyEvent.VK_RIGHT:
-                GoEast goEast = new GoEast();
-                goEast.actionPerformed(new ActionEvent(this, 0, "GoEast"));
-                break;
-            case KeyEvent.VK_DOWN:
-                GoSouth goSouth = new GoSouth();
-                goSouth.actionPerformed(new ActionEvent(this, 0, "GoSouth"));
-                break;
-            case KeyEvent.VK_SPACE:
-                if (model.state.isGameOver())
-                    model.reset();
-                break;
-            case KeyEvent.VK_I:
-                IncreaseSpeed increaseSpeed = new IncreaseSpeed();
-                increaseSpeed.actionPerformed(new ActionEvent(this, 0, "IncreaseSpeed"));
-                break;
-            case KeyEvent.VK_K:
-                AddTimeTicket addTimeTicket = new AddTimeTicket();
-                addTimeTicket.actionPerformed(new ActionEvent(this, 0, "AddTimeTicket"));
-                break;
-            case KeyEvent.VK_L:
-                DecreaseSpeed decreaseSpeed = new DecreaseSpeed();
-                decreaseSpeed.actionPerformed(new ActionEvent(this, 0, "DecreaseSpeed"));
-                break;
-            case KeyEvent.VK_M:
-                AddMonsterBall addMonsterBall = new AddMonsterBall();
-                addMonsterBall.actionPerformed(new ActionEvent(this, 0, "AddMonsterBall"));
-                break;
-            case KeyEvent.VK_Q:
-                QuitGame quitGame = new QuitGame();
-                quitGame.actionPerformed(new ActionEvent(this, 0, "QuitGame"));
-                break;
-            case KeyEvent.VK_R:
-                ResetGame resetGame = new ResetGame();
-                resetGame.actionPerformed(new ActionEvent(this, 0, "ResetGame"));
-                break;
-        }
+    private void setInputKeys(){
+        addKey(KeyEvent.VK_UP, new GoNorth(), "Go North");
+        addKey(KeyEvent.VK_LEFT, new GoWest(), "Go West");
+        addKey(KeyEvent.VK_DOWN, new GoSouth(), "Go South");
+        addKey(KeyEvent.VK_RIGHT, new GoEast(), "Go East");
+        addKey(KeyEvent.VK_SPACE, new ResetGame(), "Reset Game");
+        addKey(KeyEvent.VK_EQUALS, new IncreaseSpeed(), "Increase Speed");
+        addKey(KeyEvent.VK_UNDERSCORE, new DecreaseSpeed(), "Decrease Speed");
+        addKey(KeyEvent.VK_T, new AddTimeTicket(), "Add TimeTicket");
+        addKey(KeyEvent.VK_M, new AddMonsterBall(), "Add MonsterBall");
+        addKey(KeyEvent.VK_Q, new QuitGame(), "Quit Game");
+    }
+
+    /**
+     * @param key ID of key, example: VK_UP
+     * @param action Action to execute on keypress
+     * @param name Name of action
+     */
+    private void addKey(int key, AbstractAction action, String name){
+        view.map.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(key, 0), name);
+        view.map.getActionMap().put(name, action);
     }
 }

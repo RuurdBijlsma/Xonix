@@ -8,20 +8,22 @@ import xonix.Commands.QuitGame;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.util.Observable;
+import java.util.Observer;
 
 /**
  * Main UI frame
  */
-public class GameView extends JFrame {
+public class GameView extends JFrame implements Observer {
     private static GameView instance = null;
-    final ScoreView score;
-
-//    @Override
-//    public void update(Observable o, Object arg) {
-//
-//    }
-    private final MapView map;
+    private final ScoreView score;
+    final MapView map;
     private GameWorld gameWorld;
+
+    @Override
+    public void update(Observable o, Object arg) {
+
+    }
 
     private GameView() {
         this.gameWorld = null;
@@ -162,7 +164,7 @@ public class GameView extends JFrame {
         }
     }
 
-    private class MapView extends JPanel {
+    public class MapView extends JPanel {
 
         /**
          * Repaints mapview

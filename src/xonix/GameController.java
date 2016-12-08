@@ -24,8 +24,9 @@ public class GameController {
         return instance;
     }
 
-    void setUserController() {
+    void initialize() {
         new UserController();
+        model.fillField();
     }
 
     /**

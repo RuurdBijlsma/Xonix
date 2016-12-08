@@ -1,19 +1,19 @@
 package xonix;
 
-import xonix.Commands.MonsterBallCollision;
-import xonix.Commands.TimeTicketCollision;
+import xonix.Commands.*;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
+import java.util.Observable;
 import java.util.Random;
 
 
 /**
  * Class containing the world, including timetickets, car and monsterballs
  */
-public class GameWorld {
+public class GameWorld extends Observable{
     public static final int SQUARE_LENGTH = 102;
     public static final int SQUARE_UNITS = 5;
     public static final int GAME_TICK_DELAY = 40;
@@ -21,6 +21,7 @@ public class GameWorld {
     public static final Color LINE_COLOR = Color.red.darker().darker();
     public static final Color PLAYER_COLOR = Color.cyan;
     public static final Color MONSTER_COLOR = Color.orange;
+    public static final Color SMART_MONSTER_COLOR = Color.red;
     public static final Color TICKET_COLOR = Color.green;
     //    static final Color NO_COLOR = Color.white;
     static final Color CAR_COLOR = Color.red;
@@ -36,8 +37,6 @@ public class GameWorld {
     private GameWorld() {
         random = new Random();
         fieldSquares = FieldSquares.getInstance();
-        createMonsterballs();
-        createTimeTickets();
         car = new Car(new Point2D.Float(SQUARE_LENGTH / 2 * SQUARE_UNITS, (SQUARE_LENGTH - 1) * SQUARE_UNITS), CAR_COLOR, 270, 50, SQUARE_UNITS, SQUARE_UNITS);
         state = State.getInstance();
     }
@@ -76,16 +75,25 @@ public class GameWorld {
         return (int) (SQUARE_LENGTH * squareSize);
     }
 
+    public void fillField(){
+        createMonsterBalls();
+        createTimeTickets();
+    }
+
     /**
      * Creates monsterballs and adds them to the monsterBalls array
      */
-    private void createMonsterballs() {
+    private void createMonsterBalls() {
         monsterBalls = new ArrayList<>();
-        int number = random.nextInt(10) + 1;
+        int number = random.nextInt(8) + 1;
         for (int i = 0; i < number; i++) {
-            Point2D.Float location = new Point2D.Float(random.nextInt(SQUARE_LENGTH * SQUARE_UNITS - 30) + 15, random.nextInt(SQUARE_LENGTH * SQUARE_UNITS - 30) + 15);
-            MonsterBall ball = new MonsterBall(location, MONSTER_COLOR, random.nextInt(360), random.nextFloat() * 100 + 10, 6);
-            monsterBalls.add(ball);
+            AddMonsterBall adder = new AddMonsterBall();
+            adder.actionPerformed(null);
+        }
+        for (int i = 0; i < number/3; i++) {
+            AddSmartMonsterBall smartAdder = new AddSmartMonsterBall();
+            smartAdder.actionPerformed(null);
+            System.out.println("Adding smart balls");
         }
     }
 
@@ -96,10 +104,8 @@ public class GameWorld {
         timeTickets = new ArrayList<>();
         int number = random.nextInt(SQUARE_UNITS) + 1;
         for (int i = 0; i < number; i++) {
-            Point2D.Float location = new Point2D.Float(random.nextInt(SQUARE_LENGTH * SQUARE_UNITS - 30) + 15, random.nextInt(SQUARE_LENGTH * SQUARE_UNITS - 30) + 15);
-            int ticketSize = 7;
-            TimeTicket ticket = new TimeTicket(location, TICKET_COLOR, TIME_START, ticketSize, ticketSize);
-            timeTickets.add(ticket);
+            AddTimeTicket adder = new AddTimeTicket();
+            adder.actionPerformed(null);
         }
     }
 
@@ -127,8 +133,7 @@ public class GameWorld {
      */
     public void reset() {
         this.fieldSquares.reset();
-        createMonsterballs();
-        createTimeTickets();
+        fillField();
         this.car.reset();
         this.state.reset();
     }
