@@ -1,4 +1,4 @@
-package xonix;
+package xonix.Model;
 
 import xonix.Commands.AddSquareGroup;
 

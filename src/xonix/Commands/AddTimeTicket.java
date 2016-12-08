@@ -1,8 +1,8 @@
 package xonix.Commands;
 
 import xonix.Application;
-import xonix.GameWorld;
-import xonix.TimeTicket;
+import xonix.Model.GameWorld;
+import xonix.Model.TimeTicket;
 
 import java.awt.event.ActionEvent;
 import java.awt.geom.Point2D;

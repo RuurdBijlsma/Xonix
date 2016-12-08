@@ -1,12 +1,14 @@
 package xonix;
 
 import xonix.Commands.*;
+import xonix.Views.GameView;
 
 import javax.swing.*;
 import java.awt.event.KeyEvent;
 
 class UserController {
-    private GameView view=Application.controller.view;
+    private GameView view = Application.controller.view;
+
     UserController() {
         setInputKeys();
     }
@@ -14,7 +16,7 @@ class UserController {
     /**
      * Adds all input keys
      */
-    private void setInputKeys(){
+    private void setInputKeys() {
         addKey(KeyEvent.VK_UP, new GoNorth(), "Go North");
         addKey(KeyEvent.VK_LEFT, new GoWest(), "Go West");
         addKey(KeyEvent.VK_DOWN, new GoSouth(), "Go South");
@@ -31,11 +33,11 @@ class UserController {
     }
 
     /**
-     * @param key ID of key, example: VK_UP
+     * @param key    ID of key, example: VK_UP
      * @param action Action to execute on keypress
-     * @param name Name of action
+     * @param name   Name of action
      */
-    private void addKey(int key, AbstractAction action, String name){
+    private void addKey(int key, AbstractAction action, String name) {
         view.map.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(key, 0), name);
         view.map.getActionMap().put(name, action);
     }

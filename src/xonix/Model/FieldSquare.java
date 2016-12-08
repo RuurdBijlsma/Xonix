@@ -1,4 +1,6 @@
-package xonix;
+package xonix.Model;
+
+import xonix.Model.BaseObject;
 
 import java.awt.*;
 import java.awt.geom.Point2D;
@@ -12,7 +14,7 @@ public class FieldSquare extends BaseObject {
         setSize(size);
     }
 
-    float getSize() {
+    public float getSize() {
         return size;
     }
 

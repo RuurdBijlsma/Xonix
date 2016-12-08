@@ -1,4 +1,4 @@
-package xonix;
+package xonix.Model;
 
 import java.awt.*;
 import java.awt.geom.Point2D;
@@ -21,7 +21,7 @@ public class MonsterBall extends GameObject {
         setRadius(radius);
     }
 
-    float getRadius() {
+    public float getRadius() {
         return radius;
     }
 

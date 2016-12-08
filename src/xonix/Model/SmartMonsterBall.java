@@ -1,4 +1,6 @@
-package xonix;
+package xonix.Model;
+
+import xonix.Application;
 
 import java.awt.*;
 import java.awt.geom.Point2D;

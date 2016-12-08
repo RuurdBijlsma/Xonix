@@ -1,6 +1,9 @@
 package xonix.Commands;
 
 import xonix.*;
+import xonix.Model.GameWorld;
+import xonix.Model.SmartMonsterBall;
+import xonix.Model.Strategy;
 
 import java.awt.event.ActionEvent;
 import java.awt.geom.Point2D;

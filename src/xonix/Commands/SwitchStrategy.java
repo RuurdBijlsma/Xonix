@@ -1,8 +1,8 @@
 package xonix.Commands;
 
 import xonix.Application;
-import xonix.SmartMonsterBall;
-import xonix.Strategy;
+import xonix.Model.SmartMonsterBall;
+import xonix.Model.Strategy;
 
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;

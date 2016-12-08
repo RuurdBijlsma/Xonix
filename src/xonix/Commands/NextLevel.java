@@ -1,7 +1,7 @@
 package xonix.Commands;
 
 import xonix.Application;
-import xonix.State;
+import xonix.Model.State;
 
 import java.awt.event.ActionEvent;
 

@@ -1,8 +1,8 @@
 package xonix.Commands;
 
 import xonix.Application;
-import xonix.FieldSquares;
-import xonix.GameWorld;
+import xonix.Model.FieldSquares;
+import xonix.Model.GameWorld;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;

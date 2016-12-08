@@ -1,7 +1,7 @@
 package xonix.Commands;
 
-import xonix.GameWorld;
-import xonix.TimeTicket;
+import xonix.Model.GameWorld;
+import xonix.Model.TimeTicket;
 
 import java.awt.event.ActionEvent;
 

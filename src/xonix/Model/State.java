@@ -1,4 +1,4 @@
-package xonix;
+package xonix.Model;
 
 import xonix.Commands.NextLevel;
 
@@ -68,7 +68,7 @@ public class State {
         setClock(this.clock + clock);
     }
 
-    int getLives() {
+    public int getLives() {
         return lives;
     }
 
@@ -82,7 +82,7 @@ public class State {
         setLives(getLives() - 1);
     }
 
-    int getCurrentScore() {
+    public int getCurrentScore() {
         return currentScore;
     }
 
@@ -98,7 +98,7 @@ public class State {
         setCurrentScore(this.currentScore + currentScore);
     }
 
-    int getRequiredScore() {
+    public int getRequiredScore() {
         return requiredScore;
     }
 
@@ -106,7 +106,7 @@ public class State {
         this.requiredScore = requiredScore;
     }
 
-    boolean isGameOver() {
+    public boolean isGameOver() {
         return gameOver;
     }
 

@@ -1,4 +1,4 @@
-package xonix;
+package xonix.Model;
 
 /**
  * Interface for any steerable objects

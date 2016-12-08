@@ -1,7 +1,8 @@
-package xonix;
+package xonix.Model;
 
 import xonix.Commands.*;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.geom.Point2D;
@@ -16,7 +17,6 @@ public class GameWorld extends Observable {
     public static final int SQUARE_LENGTH = 102;
     public static final int SQUARE_UNITS = 5;
     public static final int GAME_TICK_DELAY = 40;
-    public static final int FPS = 1000 / GAME_TICK_DELAY;
     public static final Color SQUARE_COLOR = Color.black;
     public static final Color LINE_COLOR = Color.red.darker().darker();
     public static final Color PLAYER_COLOR = Color.cyan;
@@ -25,7 +25,6 @@ public class GameWorld extends Observable {
     public static final Color TICKET_COLOR = Color.green;
     static final int MONSTER_RADIUS = 6;
     static final int SMART_MONSTER_RADIUS = 10;
-    //    static final Color NO_COLOR = Color.white;
     static final Color CAR_COLOR = Color.red;
     private static final int LEVEL_START = 1;
     public static final int TIME_START = 55 - LEVEL_START;
@@ -78,7 +77,7 @@ public class GameWorld extends Observable {
         return (int) (SQUARE_LENGTH * squareSize);
     }
 
-    void fillField() {
+    public void fillField() {
         createMonsterBalls();
         createTimeTickets();
     }
@@ -110,6 +109,14 @@ public class GameWorld extends Observable {
             AddTimeTicket adder = new AddTimeTicket();
             adder.actionPerformed(null);
         }
+    }
+
+
+    /**
+     * Starts game loop, calling update every tick
+     */
+    public void play() {
+        new Timer(GameWorld.GAME_TICK_DELAY, Tick.getInstance()).start();
     }
 
     /**

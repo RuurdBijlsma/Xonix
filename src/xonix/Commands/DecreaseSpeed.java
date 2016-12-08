@@ -1,7 +1,7 @@
 package xonix.Commands;
 
 import xonix.Application;
-import xonix.Car;
+import xonix.Model.Car;
 
 import java.awt.event.ActionEvent;
 

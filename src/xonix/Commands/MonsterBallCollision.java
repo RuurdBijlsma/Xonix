@@ -1,8 +1,8 @@
 package xonix.Commands;
 
 import xonix.Application;
-import xonix.GameWorld;
-import xonix.MonsterBall;
+import xonix.Model.GameWorld;
+import xonix.Model.MonsterBall;
 
 import java.awt.event.ActionEvent;
 
