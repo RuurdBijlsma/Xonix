@@ -1,9 +1,6 @@
 package xonix;
 
-import xonix.Commands.AboutGame;
-import xonix.Commands.AddMonsterBall;
-import xonix.Commands.AddTimeTicket;
-import xonix.Commands.QuitGame;
+import xonix.Commands.*;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -72,13 +69,14 @@ public class GameView extends JFrame implements Observer {
         menuBar = new JMenuBar();
         menu = new JMenu("File");
         menuItem = new JMenuItem("New");
+        menuItem.addActionListener(new NewGame());
         menu.add(menuItem);
-        menuItem = new JMenuItem("Save");
-        menu.add(menuItem);
-        menuItem = new JMenuItem("Undo");
-        menu.add(menuItem);
-        menuItem = new JMenuItem("Sound");
-        menu.add(menuItem);
+//        menuItem = new JMenuItem("Save");
+//        menu.add(menuItem);
+//        menuItem = new JMenuItem("Undo");
+//        menu.add(menuItem);
+//        menuItem = new JMenuItem("Sound");
+//        menu.add(menuItem);
         menuItem = new JMenuItem("About");
         menuItem.addActionListener(new AboutGame());
         menu.add(menuItem);
@@ -91,11 +89,13 @@ public class GameView extends JFrame implements Observer {
         menuItem.addActionListener(new AddMonsterBall());
         menu.add(menuItem);
         menuItem = new JMenuItem("Add smartbomb");
+        menuItem.addActionListener(new AddSmartMonsterBall());
         menu.add(menuItem);
         menuItem = new JMenuItem("Add timeticket");
         menuItem.addActionListener(new AddTimeTicket());
         menu.add(menuItem);
-        menuItem = new JMenuItem("Switch bombstrategies ");
+        menuItem = new JMenuItem("Switch bombstrategies");
+        menuItem.addActionListener(new SwitchStrategy());
         menu.add(menuItem);
         menuBar.add(menu);
         this.setJMenuBar(menuBar);
@@ -191,7 +191,7 @@ public class GameView extends JFrame implements Observer {
                 }
 
             if (gameWorld.state.isGameOver()) {
-                Font font = new Font("Consolas", Font.BOLD, 25);
+                Font font = new Font("Consolas", Font.BOLD, 50);
                 FontMetrics metrics = G2D.getFontMetrics(font);
                 G2D.setColor(Color.RED);
                 G2D.setFont(font);

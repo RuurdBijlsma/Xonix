@@ -1,12 +1,10 @@
 package xonix.Commands;
 
-import xonix.GameView;
 import xonix.TextPopup;
 
 import java.awt.event.ActionEvent;
 
 public class AboutGame extends Command {
-    private GameView view;
 
     @Override
     public void actionPerformed(ActionEvent e) {

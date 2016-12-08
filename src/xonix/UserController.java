@@ -24,8 +24,10 @@ class UserController {
         addKey(KeyEvent.VK_UNDERSCORE, new DecreaseSpeed(), "Decrease Speed");
         addKey(KeyEvent.VK_T, new AddTimeTicket(), "Add TimeTicket");
         addKey(KeyEvent.VK_M, new AddMonsterBall(), "Add MonsterBall");
-        addKey(KeyEvent.VK_S, new AddSmartMonsterBall(), "Add Smart MonsterBall");
+        addKey(KeyEvent.VK_COMMA, new AddSmartMonsterBall(), "Add Smart MonsterBall");
         addKey(KeyEvent.VK_Q, new QuitGame(), "Quit Game");
+        addKey(KeyEvent.VK_N, new NewGame(), "New Game");
+        addKey(KeyEvent.VK_S, new SwitchStrategy(), "Switch All Bomb Strategy");
     }
 
     /**

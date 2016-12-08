@@ -9,20 +9,22 @@ import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Random;
 
-
 /**
  * Class containing the world, including timetickets, car and monsterballs
  */
-public class GameWorld extends Observable{
+public class GameWorld extends Observable {
     public static final int SQUARE_LENGTH = 102;
     public static final int SQUARE_UNITS = 5;
     public static final int GAME_TICK_DELAY = 40;
+    public static final int FPS = 1000 / GAME_TICK_DELAY;
     public static final Color SQUARE_COLOR = Color.black;
     public static final Color LINE_COLOR = Color.red.darker().darker();
     public static final Color PLAYER_COLOR = Color.cyan;
     public static final Color MONSTER_COLOR = Color.orange;
     public static final Color SMART_MONSTER_COLOR = Color.red;
     public static final Color TICKET_COLOR = Color.green;
+    static final int MONSTER_RADIUS = 6;
+    static final int SMART_MONSTER_RADIUS = 10;
     //    static final Color NO_COLOR = Color.white;
     static final Color CAR_COLOR = Color.red;
     private static final int LEVEL_START = 1;
@@ -32,8 +34,9 @@ public class GameWorld extends Observable{
     public final Car car;
     public final State state;
     private final Random random;
-    public ArrayList<MonsterBall> monsterBalls;
+    public ArrayList<SmartMonsterBall> monsterBalls;
     public ArrayList<TimeTicket> timeTickets;
+
     private GameWorld() {
         random = new Random();
         fieldSquares = FieldSquares.getInstance();
@@ -75,7 +78,7 @@ public class GameWorld extends Observable{
         return (int) (SQUARE_LENGTH * squareSize);
     }
 
-    public void fillField(){
+    void fillField() {
         createMonsterBalls();
         createTimeTickets();
     }
@@ -90,7 +93,7 @@ public class GameWorld extends Observable{
             AddMonsterBall adder = new AddMonsterBall();
             adder.actionPerformed(null);
         }
-        for (int i = 0; i < number/3; i++) {
+        for (int i = 0; i < number / 3; i++) {
             AddSmartMonsterBall smartAdder = new AddSmartMonsterBall();
             smartAdder.actionPerformed(null);
             System.out.println("Adding smart balls");
