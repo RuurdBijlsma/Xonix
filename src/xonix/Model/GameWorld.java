@@ -31,7 +31,7 @@ public class GameWorld extends Observable {
     private static GameWorld instance = null;
     public final FieldSquares fieldSquares;
     public final Car car;
-    public final State state;
+    public final RealState state;
     private final Random random;
     public ArrayList<SmartMonsterBall> monsterBalls;
     public ArrayList<TimeTicket> timeTickets;
@@ -40,7 +40,7 @@ public class GameWorld extends Observable {
         random = new Random();
         fieldSquares = FieldSquares.getInstance();
         car = new Car(new Point2D.Float(SQUARE_LENGTH / 2 * SQUARE_UNITS, (SQUARE_LENGTH - 1) * SQUARE_UNITS), CAR_COLOR, 270, 50, SQUARE_UNITS, SQUARE_UNITS);
-        state = State.getInstance();
+        state = RealState.getInstance();
     }
 
     public static GameWorld getInstance() {

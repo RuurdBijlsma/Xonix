@@ -7,22 +7,28 @@ import java.awt.event.ActionEvent;
 /**
  * Contains state of the game
  */
-public class State {
-    private static State instance = null;
+public class RealState implements IState{
+    private static RealState instance = null;
     private int level;
     private float clock;
     private int lives;
     private int currentScore;
     private int requiredScore;
     private boolean gameOver;
+    private ProxyState proxy;
 
-    private State() {
-        this.reset();
+    private RealState() {
+        reset();
+        proxy = new ProxyState(this);
     }
 
-    public static State getInstance() {
+    public ProxyState getProxy() {
+        return proxy;
+    }
+
+    public static RealState getInstance() {
         if (instance == null) {
-            instance = new State();
+            instance = new RealState();
         }
         return instance;
     }

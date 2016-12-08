@@ -42,7 +42,7 @@ public class SmartMonsterBall extends MonsterBall {
      * @return wether a collision happened with the player line
      */
     @Override
-    public boolean changeLocation(FieldSquares fieldSquares, float delta, State state) {
+    public boolean changeLocation(FieldSquares fieldSquares, float delta, RealState state) {
         if (strategy == Strategy.FOLLOW) {
 
             Point2D.Float carLocation = Application.controller.model.car.getLocation(),

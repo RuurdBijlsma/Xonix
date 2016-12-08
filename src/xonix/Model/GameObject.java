@@ -33,7 +33,7 @@ public abstract class GameObject extends BaseObject {
      * @param state        Game state
      * @return True if collision is detected
      */
-    public boolean changeLocation(FieldSquares fieldSquares, float delta, State state) {
+    public boolean changeLocation(FieldSquares fieldSquares, float delta, RealState state) {
         Point2D.Float prevPos = getLocation();
         Point2D.Float nextPos = nextLocation(delta);
 
@@ -53,5 +53,5 @@ public abstract class GameObject extends BaseObject {
      * @param state        Game state
      * @return True if collision is detected
      */
-    abstract boolean checkCollisions(FieldSquares fieldSquares, Point2D.Float prevPos, Point2D.Float nextPos, State state);
+    abstract boolean checkCollisions(FieldSquares fieldSquares, Point2D.Float prevPos, Point2D.Float nextPos, RealState state);
 }

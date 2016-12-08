@@ -1,7 +1,8 @@
 package xonix.Views;
 
 import xonix.Model.GameWorld;
-import xonix.Model.State;
+import xonix.Model.ProxyState;
+import xonix.Model.RealState;
 
 import javax.swing.*;
 import java.awt.*;
@@ -46,8 +47,7 @@ public class ScoreView extends JPanel {
     /**
      * Shows updated stats in the labels
      */
-    public void update(GameWorld world) {
-        State state = world.state;
+    public void update(ProxyState state) {
         this.level.setText("Level: " + state.getLevel());
         this.time.setText("Time:  " + (int) state.getClock());
         this.lives.setText("Lives: " + state.getLives());

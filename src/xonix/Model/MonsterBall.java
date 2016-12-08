@@ -37,7 +37,7 @@ public class MonsterBall extends GameObject {
      * @return True if collision with player line happens
      */
     @Override
-    boolean checkCollisions(FieldSquares fieldSquares, Point2D.Float prevPos, Point2D.Float nextPos, State state) {
+    boolean checkCollisions(FieldSquares fieldSquares, Point2D.Float prevPos, Point2D.Float nextPos, RealState state) {
         FieldSquare prevSquare = GameWorld.getSquareAtPosition(fieldSquares, prevPos);
         FieldSquare nextSquare = GameWorld.getSquareAtPosition(fieldSquares, nextPos);
 

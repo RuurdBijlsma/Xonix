@@ -43,7 +43,7 @@ public class Car extends GameObject {
      * @param state        Game state
      */
     @Override
-    boolean checkCollisions(FieldSquares fieldSquares, Point2D.Float prevPos, Point2D.Float nextPos, State state) {
+    boolean checkCollisions(FieldSquares fieldSquares, Point2D.Float prevPos, Point2D.Float nextPos, RealState state) {
         FieldSquare prevSquare = GameWorld.getSquareAtPosition(fieldSquares, prevPos);
         FieldSquare nextSquare = GameWorld.getSquareAtPosition(fieldSquares, nextPos);
         if (nextSquare.getColor() == GameWorld.SQUARE_COLOR)

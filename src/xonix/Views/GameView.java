@@ -62,7 +62,7 @@ public class GameView extends JFrame implements Observer {
      * Update score and map
      */
     public void update(GameWorld world) {
-        score.update(world);
+        score.update(world.state.getProxy());
         map.update(world);
     }
 
