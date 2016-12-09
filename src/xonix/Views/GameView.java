@@ -13,8 +13,8 @@ import java.util.Observer;
  * Main UI frame
  */
 public class GameView extends JFrame implements Observer {
-    private final ScoreView score;
     public final MapView map;
+    private final ScoreView score;
 
     public GameView(ScoreView scoreView, MapView mapView) {
         this.setTitle("Xonix Game");
@@ -79,10 +79,13 @@ public class GameView extends JFrame implements Observer {
         menuBar.add(menu);
         menu = new JMenu("Command");
         menuItem = new JMenuItem("Add bomb");
-        menuItem.addActionListener(new AddMonsterBall());
+        menuItem.addActionListener(new AddBounceMonsterBall());
         menu.add(menuItem);
         menuItem = new JMenuItem("Add smartbomb");
-        menuItem.addActionListener(new AddSmartMonsterBall());
+        menuItem.addActionListener(new AddFollowMonsterBall());
+        menu.add(menuItem);
+        menuItem = new JMenuItem("Add circlebomb");
+        menuItem.addActionListener(new AddCircleMonsterBall());
         menu.add(menuItem);
         menuItem = new JMenuItem("Add timeticket");
         menuItem.addActionListener(new AddTimeTicket());

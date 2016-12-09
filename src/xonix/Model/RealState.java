@@ -7,7 +7,7 @@ import java.awt.event.ActionEvent;
 /**
  * Contains state of the game
  */
-public class RealState implements IState{
+public class RealState implements IState {
     private static RealState instance = null;
     private int level;
     private float clock;
@@ -22,15 +22,15 @@ public class RealState implements IState{
         proxy = new ProxyState(this);
     }
 
-    public ProxyState getProxy() {
-        return proxy;
-    }
-
     public static RealState getInstance() {
         if (instance == null) {
             instance = new RealState();
         }
         return instance;
+    }
+
+    public ProxyState getProxy() {
+        return proxy;
     }
 
     /**

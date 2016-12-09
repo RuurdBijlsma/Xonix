@@ -20,11 +20,13 @@ public class GameWorld extends Observable {
     public static final Color SQUARE_COLOR = Color.black;
     public static final Color LINE_COLOR = Color.red.darker().darker();
     public static final Color PLAYER_COLOR = Color.cyan;
-    public static final Color MONSTER_COLOR = Color.orange;
+    public static final Color MONSTER_COLOR = new Color(255, 97, 3);
+    public static final Color CIRCLE_MONSTER_COLOR = Color.yellow;
     public static final Color SMART_MONSTER_COLOR = Color.red;
     public static final Color TICKET_COLOR = Color.green;
     public static final int MONSTER_RADIUS = 6;
     public static final int SMART_MONSTER_RADIUS = 10;
+    public static final int CIRCLE_MONSTER_RADIUS = 8;
     public static final int SMART_MONSTER_MAXSPEED = 30;
     public static final int MONSTER_MAXSPEED = 100;
     static final Color CAR_COLOR = Color.red;
@@ -91,13 +93,17 @@ public class GameWorld extends Observable {
      */
     private void createMonsterBalls() {
         monsterBalls = new ArrayList<>();
-        int number = random.nextInt(8) + 1;
+        int number = random.nextInt(6) + 1;
         for (int i = 0; i < number; i++) {
-            AddMonsterBall adder = new AddMonsterBall();
+            AddBounceMonsterBall adder = new AddBounceMonsterBall();
             adder.actionPerformed(null);
         }
+        for (int i = 0; i < number / 2; i++) {
+            AddCircleMonsterBall circleAdder = new AddCircleMonsterBall();
+            circleAdder.actionPerformed(null);
+        }
         for (int i = 0; i < number / 3; i++) {
-            AddSmartMonsterBall smartAdder = new AddSmartMonsterBall();
+            AddFollowMonsterBall smartAdder = new AddFollowMonsterBall();
             smartAdder.actionPerformed(null);
         }
     }

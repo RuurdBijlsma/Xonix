@@ -2,10 +2,11 @@ package xonix.Model.Strategies;
 
 import xonix.Model.MonsterBall;
 
-public class BounceStrategy extends MonsterStrategy{
+public class BounceStrategy extends MonsterStrategy {
     private static BounceStrategy instance = null;
 
-    private BounceStrategy() {}
+    private BounceStrategy() {
+    }
 
     public static BounceStrategy getInstance() {
         if (instance == null) {

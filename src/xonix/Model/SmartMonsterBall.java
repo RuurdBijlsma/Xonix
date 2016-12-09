@@ -1,12 +1,9 @@
 package xonix.Model;
 
-import xonix.Application;
-import xonix.Model.Strategies.FollowStrategy;
 import xonix.Model.Strategies.MonsterStrategy;
 
 import java.awt.*;
 import java.awt.geom.Point2D;
-import java.util.Random;
 
 public class SmartMonsterBall extends MonsterBall {
 
@@ -22,6 +19,7 @@ public class SmartMonsterBall extends MonsterBall {
     public SmartMonsterBall(Point2D.Float loc, Color color, int heading, float speed, float radius, MonsterStrategy strat) {
         super(loc, color, heading, speed, radius);
         strategy = strat;
+        strat.initialize(this);
     }
 
     public MonsterStrategy getStrategy() {

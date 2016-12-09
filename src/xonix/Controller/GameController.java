@@ -9,6 +9,7 @@ public class GameController {
     private static GameController instance = null;
     public GameView view;
     public GameWorld model;
+
     private GameController() {
         ScoreView scoreView = new ScoreView();
         MapView mapView = new MapView();

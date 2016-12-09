@@ -5,11 +5,17 @@ package xonix.Model;
  */
 public interface IState {
     int getLevel();
+
     float getClock();
+
     int getLives();
+
     int getCurrentScore();
+
     int getRequiredScore();
+
     boolean isGameOver();
+
     @Override
     String toString();
 }

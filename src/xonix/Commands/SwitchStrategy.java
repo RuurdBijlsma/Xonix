@@ -3,6 +3,7 @@ package xonix.Commands;
 import xonix.Application;
 import xonix.Model.SmartMonsterBall;
 import xonix.Model.Strategies.BounceStrategy;
+import xonix.Model.Strategies.CircleStrategy;
 import xonix.Model.Strategies.FollowStrategy;
 import xonix.Model.Strategies.MonsterStrategy;
 
@@ -14,8 +15,11 @@ public class SwitchStrategy extends Command {
     public void actionPerformed(ActionEvent e) {
         ArrayList<SmartMonsterBall> monsterBalls = Application.controller.model.monsterBalls;
         MonsterStrategy currentStrategy = monsterBalls.get(0).getStrategy();
+
+        MonsterStrategy nextStrategy = currentStrategy instanceof BounceStrategy ? FollowStrategy.getInstance() : currentStrategy instanceof FollowStrategy ? CircleStrategy.getInstance() : BounceStrategy.getInstance();
+
         for (SmartMonsterBall monsterBall : monsterBalls) {
-            monsterBall.setStrategy(currentStrategy instanceof BounceStrategy ? FollowStrategy.getInstance() : BounceStrategy.getInstance());
+            monsterBall.setStrategy(nextStrategy);
         }
     }
 }

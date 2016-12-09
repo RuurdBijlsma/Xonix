@@ -10,7 +10,8 @@ import java.awt.geom.Point2D;
 public class FollowStrategy extends MonsterStrategy {
     private static FollowStrategy instance = null;
 
-    private FollowStrategy() {}
+    private FollowStrategy() {
+    }
 
     public static FollowStrategy getInstance() {
         if (instance == null) {
@@ -30,14 +31,8 @@ public class FollowStrategy extends MonsterStrategy {
     }
 
     @Override
-    public int getMaxSpeed(){
+    public int getMaxSpeed() {
         return GameWorld.SMART_MONSTER_MAXSPEED;
-    }
-
-    @Override
-    public void initialize(MonsterBall monsterBall) {
-        super.initialize(monsterBall);
-        monsterBall.setSpeed(random.nextInt(getMaxSpeed()));
     }
 
     @Override

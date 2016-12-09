@@ -8,7 +8,8 @@ import java.awt.*;
 public class CircleStrategy extends MonsterStrategy {
     private static CircleStrategy instance = null;
 
-    private CircleStrategy() {}
+    private CircleStrategy() {
+    }
 
     public static CircleStrategy getInstance() {
         if (instance == null) {
@@ -19,12 +20,12 @@ public class CircleStrategy extends MonsterStrategy {
 
     @Override
     public int getRadius() {
-        return GameWorld.SMART_MONSTER_RADIUS;
+        return GameWorld.CIRCLE_MONSTER_RADIUS;
     }
 
     @Override
     public Color getColor() {
-        return GameWorld.SMART_MONSTER_COLOR;
+        return GameWorld.CIRCLE_MONSTER_COLOR;
     }
 
     @Override

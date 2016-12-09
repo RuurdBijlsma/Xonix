@@ -1,7 +1,5 @@
 package xonix.Model;
 
-import xonix.Model.BaseObject;
-
 import java.awt.*;
 import java.awt.geom.Point2D;
 
