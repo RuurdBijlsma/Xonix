@@ -6,6 +6,7 @@ import java.awt.geom.Point2D;
  * Abstract class to extend for moving objects
  */
 public abstract class GameObject extends BaseObject {
+
     /**
      * Calculates an objects next position based on heading, speed and location
      *

@@ -6,6 +6,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.geom.Point2D;
 import java.util.Iterator;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class FieldSquares implements Iterable<FieldSquare> {
     private static FieldSquares instance = null;
@@ -26,6 +28,57 @@ public class FieldSquares implements Iterable<FieldSquare> {
             instance = new FieldSquares();
         }
         return instance;
+    }
+
+    public void drawLine(FieldSquare from, FieldSquare to, Color color) {
+        Point2D.Float fromLoc = getCoordinates(from);
+        Point2D.Float toLoc = getCoordinates(to);
+
+
+        java.util.List<Integer> range;
+        if (fromLoc.x == toLoc.x) {
+            //vertical line
+            int fromY = (int) fromLoc.y,
+                    toY = (int) toLoc.y,
+                    t = toY,
+                    f = fromY;
+            if (fromY > toY) {
+                f = toY;
+                t = fromY;
+            }
+            range = IntStream.rangeClosed(f, t).boxed().collect(Collectors.toList());
+            int x = (int) fromLoc.x;
+            for (int y : range) {
+                if (fieldSquares[x][y].getColor() == GameWorld.SQUARE_COLOR) {
+                    fieldSquares[x][y].setColor(color);
+                }
+            }
+        } else {
+            //horizontal line
+            int fromX = (int) fromLoc.x,
+                    toX = (int) toLoc.x,
+                    t = toX,
+                    f = fromX;
+            if (fromX > toX) {
+                f = toX;
+                t = fromX;
+            }
+            range = IntStream.rangeClosed(f, t).boxed().collect(Collectors.toList());
+            int y = (int) fromLoc.y;
+            for (int x : range) {
+                if (fieldSquares[x][y].getColor() == GameWorld.SQUARE_COLOR) {
+                    fieldSquares[x][y].setColor(color);
+                }
+            }
+        }
+    }
+
+    private Point2D.Float getCoordinates(FieldSquare square) {
+        float x = square.getLocation().x;
+        float y = square.getLocation().y;
+        x /= square.getSize();
+        y /= square.getSize();
+        return new Point2D.Float((int) x, (int) y);
     }
 
     /**
