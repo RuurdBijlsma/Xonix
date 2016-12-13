@@ -1,5 +1,6 @@
 package xonix.Model;
 
+import xonix.Application;
 import xonix.Commands.NextLevel;
 
 import java.awt.event.ActionEvent;
@@ -95,6 +96,7 @@ public class RealState implements IState {
     private void setCurrentScore(int cscore) {
         this.currentScore = cscore;
         if (cscore > requiredScore) {
+            Application.controller.model.soundManager.play(Sound.LEVELUP);
             NextLevel nextLevel = new NextLevel();
             nextLevel.actionPerformed(new ActionEvent(this, 0, "NextLevel"));
         }
@@ -117,6 +119,9 @@ public class RealState implements IState {
     }
 
     private void setGameOver(boolean gameOver) {
+        if(gameOver)
+            Application.controller.model.soundManager.play(Sound.GAMEOVER);
+
         this.gameOver = gameOver;
     }
 

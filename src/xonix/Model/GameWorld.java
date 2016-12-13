@@ -39,12 +39,14 @@ public class GameWorld extends Observable {
     private final Random random;
     public ArrayList<SmartMonsterBall> monsterBalls;
     public ArrayList<TimeTicket> timeTickets;
+    public SoundManager soundManager;
 
     private GameWorld() {
         random = new Random();
         fieldSquares = FieldSquares.getInstance();
         car = new Car(new Point2D.Float(SQUARE_LENGTH / 2 * SQUARE_UNITS, (SQUARE_LENGTH - 1) * SQUARE_UNITS), CAR_COLOR, 270, 50, SQUARE_UNITS, SQUARE_UNITS);
         state = RealState.getInstance();
+        soundManager = SoundManager.getInstance();
     }
 
     public static GameWorld getInstance() {
