@@ -57,8 +57,6 @@ public abstract class BaseObject implements IMovable, ISteerable, IColorable {
     }
 
     public void setSpeed(float speed) {
-//        int maxSpeed = GameWorld.SQUARE_LENGTH;
-//        speed = speed > maxSpeed ? maxSpeed : speed;
         this.speed = speed;
     }
 

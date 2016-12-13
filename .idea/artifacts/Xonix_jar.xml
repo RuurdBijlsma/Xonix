@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Xonix:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Xonix_jar</output-path>
+    <root id="archive" name="Xonix.jar">
+      <element id="module-output" name="Xonix" />
+    </root>
+  </artifact>
+</component>
